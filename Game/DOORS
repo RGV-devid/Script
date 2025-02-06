@@ -43,6 +43,37 @@ local Groups = {
 }
 
 local Tabs = {
-	Main = Groups.Group:Tab({ Name = "Demo", Image = "rbxassetid://18821914323" }),
-	Settings = Groups.Group:Tab({ Name = "Settings", Image = "rbxassetid://10734950309" })
+     Main = Groups.Group:Tab({ Name = "Main", Image = "rbxassetid://18821914323" }),
+     Players = Groups.Group:Tab({ Name = "Players", Image = "rbxassetid://10747373176" }),
+     Entities = Groups.Group:Tab({ Name = "Entities", Image = "rbxassetid://10734951847" }),
+     Visual = Groups.Group:Tab({ Name = "Visual", Image = "rbxassetid://10723396107" }),
+     ESP = Groups.Group:Tab({ Name = "ESP", Image = "rbxassetid://10734954538" }),
+     Settings = Groups.Group:Tab({ Name = "Settings", Image = "rbxassetid://10734950309" })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
