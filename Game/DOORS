@@ -74,6 +74,8 @@ local Section = {
         Reach = Tabs.Main:Section({ Side = "Left" }),
         Interact = Tabs.Main:Section({ Side = "Right" }),
         Automation = Tabs.Main:Section({ Side = "Left" }),
+        World = Tabs.Main:Section({ Side = "Right" }),
+        Misc = Tabs.Main:Section({ Side = "Left" }),
         Alert = Tabs.Main:Section({ Side = "Right" })
 }
 local Header = {
@@ -82,6 +84,8 @@ Fast = Section.Fast:Header({Name = "Fast"}),
 Reach = Section.Reach:Header({Name = "Reach"}),
 Interact = Section.Interact:Header({Name = "Interact"}),
 Automation = Section.Automation:Header({Name = "Automation"}),
+World = Section.World:Header({Name = "World"}),
+Misc = Section.Automation:Header({Name = "Misc"}),
 Alert = Section.Alert:Header({Name = "Alert"})
 }
 
