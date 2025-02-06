@@ -15,7 +15,7 @@ else
 RemotesFolder = ReplicatedStorage.RemotesFolder
 end
 local Library = loadstring(game:HttpGet("https://github.com/RGV-devid/Script/blob/main/Library/MacLib.lua?raw=true"))()
-local ToggleUI = loadstring(game:HttpGet("https://github.com/ImamGV/Ui/blob/main/ToggleUI?raw=true"))
+loadstring(game:HttpGet("https://github.com/ImamGV/Ui/blob/main/ToggleUI?raw=true"))
 
 local Window = Library:Window({
 	Title = "YOUHUB | DOORS",
@@ -215,10 +215,50 @@ end
 end})
 
 
+Section.Automation:Toggle({
+	Name = "Auto Breaker",
+	Default = false,
+	Callback = function(v)
+_G.AutoBreaker = v
+while _G.AutoBreaker do wait(1)
+if _G.AutoBreaker then
+RemotesFolder.EBF:FireServer()
+end
+end
+end})
+Section.Automation:Toggle({
+	Name = "Auto Padlock Unlock",
+	Default = false,
+	Callback = function(v)
+_G.AutoPadlockUnlock = v
+while _G.AutoPadlockUnlock do wait(0.5)
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if not player.Character then continue end
+            local tool = player.Character:FindFirstChildOfClass("Tool")
 
+            if tool and tool.Name:match("LibraryHintPaper") then
+                local code = tool:FindFirstChild("Code") and tool.Code.Value or nil
+                local padlock = workspace:FindFirstChild("Padlock", true)
 
-
-
+                if tonumber(code) and (padlock.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.PadlockUnlockDistance or 50 then
+                    firetouchinterest(padlock, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
+                    firetouchinterest(padlock, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
+                end
+            end
+        end
+    end
+end})
+Section.Automation:Divider()
+Section.Automation:Slider({
+	Name = "Padlock Unlock Distance",
+	Default = 50,
+	Minimum = 50,
+	Maximum = 200,
+	DisplayMethod = "Percent",
+	Precision = 0,
+	Callback = function(v)
+	_G.PadlockUnlockDistance = v
+end})
 
 
 
