@@ -216,35 +216,6 @@ else
 InstanceInteract:Disconnect()
 end
 end})
-Section.Interact:Toggle({
-	Name = "Classic Interact",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.PromptService.Enabled = false
-v.Style = "Default"
-end
-end
-ClassicInteract = workspace.CurrentRooms.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.PromptService.Enabled = false
-v.Style = "Default"
-end
-end
-end)
-else
-ClassicInteract:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.PromptService.Enabled = true
-v.Style = "Custom"
-end
-end
-end
-end})
 
 
 Section.Automation:Toggle({
@@ -425,6 +396,8 @@ Section.Misc:Button({
 		{Name = "Cancel"}}})
 end})
 
+
+_G.PlaySoundAlert = 5
 Section.Alert:Toggle({
 	Name = "Alert Entity",
 	Default = false,
@@ -441,6 +414,14 @@ Title = Window.Settings.Title,
 Description = "Rush!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Rush!")
 end
@@ -450,6 +431,14 @@ Title = Window.Settings.Title,
 Description = "Ambush!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Ambush!")
 end
@@ -459,6 +448,14 @@ Title = Window.Settings.Title,
 Description = "Blitz!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Blitz!")
 end
@@ -468,6 +465,14 @@ Title = Window.Settings.Title,
 Description = "A60!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] A60!")
 end
@@ -477,6 +482,14 @@ Title = Window.Settings.Title,
 Description = "A120!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] A120!")
 end
@@ -486,12 +499,27 @@ Title = Window.Settings.Title,
 Description = "Glitch Ambush!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 elseif v.Name == "GlitchRush" then
 Window:Notify({
 Title = Window.Settings.Title,
 Description = "Glitch Rush!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
 end
 elseif v.Name == "GloombatSwarm" then
 Window:Notify({
@@ -499,6 +527,14 @@ Title = Window.Settings.Title,
 Description = "Gloombat Swarm!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Gloombat Swarm!")
 end
@@ -508,6 +544,14 @@ Title = Window.Settings.Title,
 Description = "Eyes!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Eyes!")
 end
@@ -517,6 +561,14 @@ Title = Window.Settings.Title,
 Description = "Lookman!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Lookman!")
 end
@@ -526,6 +578,14 @@ Title = Window.Settings.Title,
 Description = "Jeff The Killer!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] JeffTheKiller!")
 end
@@ -535,8 +595,17 @@ Title = Window.Settings.Title,
 Description = "Seek chase, goodluck!",
 Lifetime = 3
 })
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Seek Chase Goodluck!")
+end
 end
 end
 end
@@ -550,4 +619,36 @@ Section.Alert:Toggle({
 	Default = false,
 	Callback = function(v)
 _G.PlayChatAlert = v
+end})
+Section.Alert:Toggle({
+	Name = "Playing Sound",
+	Default = false,
+	Callback = function(v)
+_G.SoundAlert = v
+end})
+Section.Alert:Dropdown({
+	Name = "Volume Sound",
+	Multi = false,
+	Required = true,
+	Options = {"2.5","5","7.5","10"},
+	Default = 2,
+	Callback = function(v)
+_G.PlaySoundAlert = v
+end})
+Section.Alert:Button({
+	Name = "Playing Test",
+	Callback = function()
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Alert!",
+Lifetime = 3
+})
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.PlaySoundAlert
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 end})
