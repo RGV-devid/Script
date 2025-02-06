@@ -75,7 +75,11 @@ local Section = {
         Automation = Tabs.Main:Section({ Side = "Left" }),
         World = Tabs.Main:Section({ Side = "Right" }),
         Misc = Tabs.Main:Section({ Side = "Left" }),
-        Alert = Tabs.Main:Section({ Side = "Right" })
+        Alert = Tabs.Main:Section({ Side = "Right" }),
+
+        Players = Tabs.Players:Section({ Side = "Left" }),
+        LocalPlayer = Tabs.Players:Section({ Side = "Right" }),
+        Body = Tabs.Players:Section({ Side = "Left" })
 }
 local Header = {
 Death = Section.Death:Header({Name = "Death"}),
@@ -85,7 +89,11 @@ Interact = Section.Interact:Header({Name = "Interact"}),
 Automation = Section.Automation:Header({Name = "Automation"}),
 World = Section.World:Header({Name = "World"}),
 Misc = Section.Misc:Header({Name = "Misc"}),
-Alert = Section.Alert:Header({Name = "Alert"})
+Alert = Section.Alert:Header({Name = "Alert"}),
+
+Players = Section.Players:Header({Name = "Players"}),
+LocalPlayer = Section.LocalPlayer:Header({Name = "LocalPlayer"}),
+Body = Section.Body:Header({Name = "Body"})
 }
 
 Section.Death:Dropdown({
@@ -651,4 +659,30 @@ Sound.Volume = _G.PlaySoundAlert
 Sound.PlayOnRemove = true
 Sound:Destroy()
 end
+end})
+
+
+Section.Players:Dropdown({
+	Name = "Walkspeed",
+	Multi = false,
+	Required = true,
+	Options = {"20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"},
+	Default = 1,
+	Callback = function(v)
+_G.WalkSpeed = v
+end})
+Section.Players:Toggle({
+	Name = "Enabled Walkspeed",
+	Default = false,
+	Callback = function(v)
+_G.EnabledSpeed = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledSpeed and not _G.SeekSpeed then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.WalkSpeed or 17
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 1)
+else
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 17
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 0)
+end
+end)
 end})
