@@ -411,7 +411,7 @@ if v:IsDescendantOf(workspace) then
 if v.Name == "RushMoving" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Rush!",
+Description = "Entity 'Rush' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -428,7 +428,7 @@ end
 elseif v.Name == "AmbushMoving" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Ambush!",
+Description = "Entity 'Ambush' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -445,7 +445,7 @@ end
 elseif v.Name == "BackdoorRush" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Blitz!",
+Description = "Entity 'Blitz' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -462,7 +462,7 @@ end
 elseif v.Name == "A60" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "A60!",
+Description = "Entity 'A60' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -479,7 +479,7 @@ end
 elseif v.Name == "A120" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "A120!",
+Description = "Entity 'A120' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -496,7 +496,7 @@ end
 elseif v.Name == "GlitchAmbush" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Glitch Ambush!",
+Description = "Entity 'AR0xMBUSH' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -510,7 +510,7 @@ end
 elseif v.Name == "GlitchRush" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Glitch Rush!",
+Description = "Entity 'RNIUSHCg==' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -524,7 +524,7 @@ end
 elseif v.Name == "GloombatSwarm" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Gloombat Swarm!",
+Description = "Entity 'GloombatSwarm' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -541,7 +541,7 @@ end
 elseif v.Name == "Eyes" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Eyes!",
+Description = "Entity 'Eyes' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -558,7 +558,7 @@ end
 elseif v.Name == "BackdoorLookman" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Lookman!",
+Description = "Entity 'Lookman' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -575,7 +575,7 @@ end
 elseif v.Name == "JeffTheKiller" then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Jeff The Killer!",
+Description = "Entity 'Jeff The Killer' has spawn!",
 Lifetime = 3
 })
 if _G.SoundAlert then
@@ -592,7 +592,7 @@ end
 elseif (v.Name == "SeekMoving" or v.Name == "SeekMovingNewClone") then
 Window:Notify({
 Title = Window.Settings.Title,
-Description = "Seek chase, goodluck!",
+Description = "Entity 'Seek' has spawn, goodluck for run!",
 Lifetime = 3
 })
 if _G.SoundAlert then
