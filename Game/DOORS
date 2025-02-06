@@ -424,3 +424,15 @@ Section.Misc:Button({
 		end},
 		{Name = "Cancel"}}})
 end})
+
+
+Section.Alert:Dropdown({
+	Name = "Select Entity Alert",
+	Search = true,
+	Multi = true,
+	Required = false,
+	Options = optionTable,
+	Default = {"Rush","Ambush","Blitz","A60","A120","Glitch Ambush","Gloombat Swarm","Glitch Rush","Eyes","Lookman","Jeff The Killer","Seek Chase"},
+	Callback = function(v)
+_G.SelectEntityAlert = v
+end})
