@@ -1,3 +1,19 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameData = ReplicatedStorage:WaitForChild("GameData")
+local Players = game:GetService("Players")
+local Floor = GameData:WaitForChild("Floor")
+local Fools = Floor.Value == "Fools"
+local Hotel = Floor.Value == "Hotel"
+local Rooms = Floor.Value == "Rooms"
+local Mines = Floor.Value == "Mines"
+local Retro = Floor.Value == "Retro"
+local Rooms = Floor.Value == "Rooms"
+local Backdoor = Floor.Value == "Backdoor"
+if Fools then
+RemotesFolder = ReplicatedStorage.EntityInfo
+else
+RemotesFolder = ReplicatedStorage.RemotesFolder
+end
 local Library = loadstring(game:HttpGet("https://github.com/RGV-devid/Script/blob/main/Library/MacLib.lua?raw=true"))()
 local ToggleUI = loadstring(game:HttpGet("https://github.com/ImamGV/Ui/blob/main/ToggleUI?raw=true"))
 
