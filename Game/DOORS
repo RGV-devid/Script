@@ -69,8 +69,36 @@ Automation = Section.Automation:Header({Name = "Automation"}),
 Alert = Section.Alert:Header({Name = "Alert"})
 }
 
-
-
+Section.Death:Dropdown({
+	Name = "Select On Death",
+	Multi = false,
+	Required = true,
+	Options = {"Leave","Lobby","Revive"},
+	Default = 1,
+	Callback = function(v)
+_G.SelectOnDeath = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledOnDeath then
+if game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectOnDeath == "Lobby" then
+RemotesFolder.Lobby:FireServer()
+elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectOnDeath == "Leave" then
+game:Shutdown()
+elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectOnDeath == "Revive [FREE]" then
+RemotesFolder.Revive:FireServer()
+end
+end
+end)
+end})
+Section.Death:Toggle({
+	Name = "Enabled On Death",
+	Default = false,
+	Callback = function(v)
+_G.EnabledOnDeath = v
+Window:Notify({
+Title = Window.Settings.Title,
+Description = (v and "Enabled " or "Disabled ") .. "On Death"
+})
+end})
 
 
 
