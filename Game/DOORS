@@ -265,9 +265,46 @@ Section.Automation:Slider({
 end})
 
 
-
-
-
+game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+if _G.ClosetsExitFix and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
+RemotesFolder.CamLock:FireServer()
+end 
+end)
+Section.World:Toggle({
+	Name = "Closets Exit Fix",
+	Default = false,
+	Callback = function(v)
+_G.ClosetsExitFix = v
+end})
+if Retro then
+Section.World:Toggle({
+	Name = "Hiding Fake Bridge",
+	Default = false,
+	Callback = function(v)
+_G.BlurFakeBridge = v
+if _G.BlurFakeBridge then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0.9
+end
+end
+BlurFakeBridge = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0.75
+end
+end
+end)
+else
+BlurFakeBridge:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0
+end
+end
+end
+end})
+end
 
 
 
