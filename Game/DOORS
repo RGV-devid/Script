@@ -15,7 +15,6 @@ else
 RemotesFolder = ReplicatedStorage.RemotesFolder
 end
 local Library = loadstring(game:HttpGet("https://github.com/RGV-devid/Script/blob/main/Library/MacLib.lua?raw=true"))()
-loadstring(game:HttpGet("https://github.com/ImamGV/Ui/blob/main/ToggleUI?raw=true"))
 
 local Window = Library:Window({
 	Title = "YOUHUB | DOORS",
@@ -85,7 +84,7 @@ Reach = Section.Reach:Header({Name = "Reach"}),
 Interact = Section.Interact:Header({Name = "Interact"}),
 Automation = Section.Automation:Header({Name = "Automation"}),
 World = Section.World:Header({Name = "World"}),
-Misc = Section.Automation:Header({Name = "Misc"}),
+Misc = Section.Misc:Header({Name = "Misc"}),
 Alert = Section.Alert:Header({Name = "Alert"})
 }
 
@@ -217,6 +216,35 @@ else
 InstanceInteract:Disconnect()
 end
 end})
+Section.Interact:Toggle({
+	Name = "Classic Interact",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.PromptService.Enabled = false
+v.Style = "Default"
+end
+end
+ClassicInteract = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.PromptService.Enabled = false
+v.Style = "Default"
+end
+end
+end)
+else
+ClassicInteract:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.PromptService.Enabled = true
+v.Style = "Custom"
+end
+end
+end
+end})
 
 
 Section.Automation:Toggle({
@@ -253,15 +281,14 @@ while _G.AutoPadlockUnlock do wait(0.5)
     end
 end})
 Section.Automation:Divider()
-Section.Automation:Slider({
-	Name = "Padlock Unlock Distance",
-	Default = 50,
-	Minimum = 50,
-	Maximum = 200,
-	DisplayMethod = "Percent",
-	Precision = 0,
+Section.Automation:Dropdown({
+	Name = "Unlock Distance",
+	Multi = false,
+	Required = true,
+	Options = {"50","100","150","200"},
+	Default = 1,
 	Callback = function(v)
-	_G.PadlockUnlockDistance = v
+_G.PadlockUnlockDistance = v
 end})
 
 
@@ -305,8 +332,95 @@ end
 end
 end})
 end
+if Backdoor then
+Section.World:Toggle({
+	Name = "Hiding Live Sanity",
+	Default = false,
+	Callback = function(v)
+_G.NoLiveSanity = v
+while _G.NoLiveSanity do wait(1)
+for _,v in workspace.CurrentCamera:GetChildren() do
+if v.Name == "LiveSanity" and workspace:FindFirstChild("EntityModel") then
+v.Enabled = not _G.NoLiveSanity
+end
+end
+end
+end})
+end
+Section.World:Toggle({
+	Name = "No Void Roblox",
+	Default = false,
+	Callback = function(v)
+if v then
+workspace.FallenPartsDestroyHeight = 0 / 0
+else
+workspace.FallenPartsDestroyHeight = -50000
+end
+end})
 
 
-
-
-
+Section.Misc:Button({
+	Name = "Lobby",
+	Callback = function()
+	Window:Dialog({
+	Title = Window.Settings.Title,
+	Description = "You want return to Lobby?",
+	Buttons = {
+		{Name = "Confirm",
+		Callback = function()
+		RemotesFolder.Lobby:FireServer()
+		end},
+		{Name = "Cancel"}}})
+end})
+Section.Misc:Button({
+	Name = "Revive",
+	Callback = function()
+	Window:Dialog({
+	Title = Window.Settings.Title,
+	Description = "You want Revive?",
+	Buttons = {
+		{Name = "Confirm",
+		Callback = function()
+		RemotesFolder.Revive:FireServer()
+		end},
+		{Name = "Cancel"}}})
+end})
+Section.Misc:Button({
+	Name = "Play Again",
+	Callback = function()
+	Window:Dialog({
+	Title = Window.Settings.Title,
+	Description = "You want Play Again?",
+	Buttons = {
+		{Name = "Confirm",
+		Callback = function()
+		RemotesFolder.PlayAgain:FireServer()
+		end},
+		{Name = "Cancel"}}})
+end})
+Section.Misc:Button({
+	Name = "Leave",
+	Callback = function()
+	Window:Dialog({
+	Title = Window.Settings.Title,
+	Description = "You want exit game?",
+	Buttons = {
+		{Name = "Confirm",
+		Callback = function()
+		game:Shutdown()
+		end},
+		{Name = "Cancel"}}})
+end})
+Section.Misc:Button({
+	Name = "Reset Character",
+	Callback = function()
+	Window:Dialog({
+	Title = Window.Settings.Title,
+	Description = "You want return to Lobby?",
+	Buttons = {
+		{Name = "Confirm",
+		Callback = function()
+		Players.LocalPlayer.Humanoid.Health = 0
+		end},
+		{Name = "Cancel"}}})
+end})
