@@ -1,1 +1,48 @@
+local Library = loadstring(game:HttpGet("https://github.com/RGV-devid/Script/blob/main/Library/MacLib.lua?raw=true"))()
 
+local Window = Library:Window({
+	Title = "YOUHUB | DOORS",
+	Subtitle = "BETA v0.0.2 ",
+	Size = UDim2.fromOffset(860, 650),
+	DragStyle = 1,
+	DisabledWindowControls = {},
+	ShowUserInfo = true,
+	Keybind = Enum.KeyCode.RightControl,
+	AcrylicBlur = true,
+})
+
+local UISettings = {
+UIBlurToggle = Window:GlobalSetting({
+		Name = "UI Blur",
+		Default = Window:GetAcrylicBlurState(),
+		Callback = function(v)
+		Window:SetAcrylicBlurState(v)
+		Window:Notify({
+				Title = Window.Settings.Title,
+				Description = (v and "Enabled" or "Disabled") .. " UI Blur",
+				Lifetime = 5
+		})
+ end,
+}),
+ShowUserInfo = Window:GlobalSetting({
+		Name = "Show User Info",
+		Default = Window:GetUserInfoState(),
+		Callback = function(v)
+		Window:SetUserInfoState(v)
+		Window:Notify({
+				Title = Window.Settings.Title,
+				Description = (v and "Showing" or "Redacted") .. " User Info",
+				Lifetime = 5
+			})
+		end,
+	})
+}
+
+local Groups = {
+	Group = Window:TabGroup()
+}
+
+local Tabs = {
+	Main = Groups.Group:Tab({ Name = "Demo", Image = "rbxassetid://18821914323" }),
+	Settings = Groups.Group:Tab({ Name = "Settings", Image = "rbxassetid://10734950309" })
+}
