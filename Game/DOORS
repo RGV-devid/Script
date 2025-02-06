@@ -52,7 +52,22 @@ local Tabs = {
      Settings = Groups.Group:Tab({ Name = "Settings", Image = "rbxassetid://10734950309" })
 }
 
-
+local Section = {
+	Death = Tabs.Main:Section({ Side = "Left" }),
+        Fast = Tabs.Main:Section({ Side = "Right" }),
+        Reach = Tabs.Main:Section({ Side = "Left" }),
+        Interact = Tabs.Main:Section({ Side = "Right" }),
+        Automation = Tabs.Main:Section({ Side = "Left" }),
+        Alert = Tabs.Main:Section({ Side = "Right" })
+}
+local Header = {
+Death = Section.Death:Header({Name = "Death"}),
+Fast = Section.Fast:Header({Name = "Fast"}),
+Reach = Section.Reach:Header({Name = "Reach"}),
+Interact = Section.Interact:Header({Name = "Interact"}),
+Automation = Section.Automation:Header({Name = "Automation"}),
+Alert = Section.Alert:Header({Name = "Alert"})
+}
 
 
 
