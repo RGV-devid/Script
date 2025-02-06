@@ -86,7 +86,7 @@ Alert = Section.Alert:Header({Name = "Alert"})
 }
 
 Section.Death:Dropdown({
-	Name = "Select On Death",
+	Name = "Select on Death",
 	Multi = false,
 	Required = true,
 	Options = {"Leave","Lobby","Revive"},
@@ -106,21 +106,113 @@ end
 end)
 end})
 Section.Death:Toggle({
-	Name = "Enabled On Death",
+	Name = "Enabled on Death",
 	Default = false,
 	Callback = function(v)
 _G.EnabledOnDeath = v
-Window:Notify({
-Title = Window.Settings.Title,
-Description = (v and "Enabled " or "Disabled ") .. "On Death"
-})
 end})
 
 
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.FastDoors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door"):SetAttribute("FastOpen", true)
+end 
+end)
+end)
+Section.Fast:Toggle({
+	Name = "Fast Doors",
+	Default = false,
+	Callback = function(v)
+_G.FastDoors = v
+end})
 
 
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.DoorsReach then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
+end 
+end)
+end)
+Section.Reach:Toggle({
+	Name = "Doors Reach",
+	Default = false,
+	Callback = function(v)
+_G.DoorsReach = v
+end})
+Section.Reach:Toggle({
+	Name = "Reach",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = 15
+end
+end
+IncreasedDistance = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = 15
+end
+end
+end)
+else
+IncreasedDistance:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = 8
+end
+end
+end
+end})
 
-
+Section.Interact:Toggle({
+	Name = "Through Interact",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = false
+end
+end
+ThroughInteract = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = false
+end
+end
+end)
+else
+ThroughInteract:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = true
+end
+end
+end
+end})
+Section.Interact:Toggle({
+	Name = "Instance Interact",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.HoldDuration = 0
+end
+end
+InstanceInteract = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.HoldDuration = 0
+end
+end
+end)
+else
+InstanceInteract:Disconnect()
+end
+end})
 
 
 
