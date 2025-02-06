@@ -427,7 +427,7 @@ Section.Misc:Button({
 	Buttons = {
 		{Name = "Confirm",
 		Callback = function()
-		game.Players.LocalPlayer.Character.Humanoid.Health = 0
+		Players.LocalPlayer.Character.Humanoid.Health = 0
 		end},
 		{Name = "Cancel"}}})
 end})
@@ -442,8 +442,7 @@ Section.Alert:Dropdown({
 	Default = {},
 	Callback = function(v)
 _G.SelectEntityAlert = v
-end,
-}, "SelectAlert")
+end,}, "SelectAlert")
 
 Section.Alert:Toggle({
 	Name = "Alert Entity",
