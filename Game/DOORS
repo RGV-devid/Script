@@ -416,11 +416,11 @@ Section.Misc:Button({
 	Callback = function()
 	Window:Dialog({
 	Title = Window.Settings.Title,
-	Description = "You want return to Lobby?",
+	Description = "You want die?",
 	Buttons = {
 		{Name = "Confirm",
 		Callback = function()
-		Players.LocalPlayer.Humanoid.Health = 0
+		game.Players.LocalPlayer.Humanoid.Health = 0
 		end},
 		{Name = "Cancel"}}})
 end})
