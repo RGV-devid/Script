@@ -747,13 +747,6 @@ end
 task.wait()
 end
 end})
-Section.Players:Keybind({
-	Name = "Fly",
-	Blacklist = false,
-        Default = Enum.KeyCode.F,
-	Callback = function(v)
-_G.StartFly = v
-end})
 
 Section.Players:Divider()
 local ClonedCollision = game:GetService("Players").LocalPlayer.Character.Collision:Clone()
@@ -793,18 +786,165 @@ Section.Players:Toggle({
 	Callback = function(v)
 _G.SeekSpeed = v
 end})
-Section.Players:Keybind({
-	Name = "Invalid Fly,Speed",
-	Blacklist = false,
-        Default = Enum.KeyCode.J,
-	Callback = function(v)
-_G.SeekSpeed = v
-end})
-
 
 Section.LocalPlayer:Toggle({
-	Name = "",
+	Name = "Eat Candies",
 	Default = false,
 	Callback = function(v)
-_G.SpeedBypass = v
+_G.EatCandy = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
+if not game.Players.LocalPlayer.Character:FindFirstChild("Meshes/DOORS_EvilCandy_Cube", true) then
+game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
+end
+end
+end)
+end})
+Section.LocalPlayer:Toggle({
+	Name = "No Accessories",
+	Default = false,
+	Callback = function(v)
+_G.NoSlow = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character.Head.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LowerTorso.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.UpperTorso.Massless = not _G.NoSlow;
+end)
+end})
+Section.LocalPlayer:Toggle({
+	Name = "Noclip",
+	Default = false,
+	Callback = function(v)
+if v then
+        noclipConnection = game:GetService("RunService").Stepped:Connect(function()
+            local player = game.Players.LocalPlayer
+            if player and player.Character then
+                for _, part in pairs(player.Character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
+            end
+        end)
+    else
+        if noclipConnection then
+            noclipConnection:Disconnect()
+            noclipConnection = nil
+        end
+    end
+end})
+if not Fools then
+Section.LocalPlayer:Toggle({
+	Name = "Always jump",
+	Default = false,
+	Callback = function(v)
+_G.Jump = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character:SetAttribute("CanJump", _G.Jump)
+end)
+end})
+Section.LocalPlayer:Toggle({
+	Name = "Crouch Spoof",
+	Default = false,
+	Callback = function(v)
+_G.CrouchSpoof = v
+game:GetService("RunService").RenderStepped:Connect(function()
+RemotesFolder.Crouch:FireServer(_G.CrouchSpoof)
+end)
+end})
+end
+Section.Body:Colorpicker({
+	Name = "Color Body",
+	Default = Color3.fromRGB(255, 255, 255),
+	Callback = function(v)
+_G.BodyColor = v
+task.spawn(function()
+while _G.BodyColor do wait(1)
+game.Players.LocalPlayer.Character.Head.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.UpperTorso.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightHand.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightLowerArm.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightLowerLeg.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightUpperArm.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightUpperLeg.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftLowerLeg.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftUpperArm.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftUpperLeg.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LowerTorso.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightFoot.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftFoot.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftHand.Color = _G.BodyColor or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftLowerArm.Color = _G.BodyColor or Color3.new(1,1,1)
+end
+end)
+end})
+Section.Body:Toggle({
+	Name = "Chams Body",
+	Default = false,
+	Callback = function(v)
+_G.BlurBody = v
+if _G.BlurBody then
+game.Players.LocalPlayer.Character.Head.Material = "ForceField"
+game.Players.LocalPlayer.Character.UpperTorso.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightHand.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightLowerArm.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightLowerLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightUpperArm.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightUpperLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftLowerLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftUpperArm.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftUpperLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.LowerTorso.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightFoot.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftFoot.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftHand.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftLowerArm.Material = "ForceField"
+else
+game.Players.LocalPlayer.Character.Head.Material = "Plastic"
+game.Players.LocalPlayer.Character.UpperTorso.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightHand.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightLowerArm.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightLowerLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightUpperArm.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightUpperLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftLowerLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftUpperArm.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftUpperLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.LowerTorso.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightFoot.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftFoot.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftHand.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftLowerArm.Material = "Plastic"
+end
+end})
+Section.Body:Toggle({
+	Name = "Chams Accessory",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("Accessory") then
+v.Material = "ForceField"
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("Accessory") then
+v.Material = "Plastic"
+end
+end
+end
 end})
