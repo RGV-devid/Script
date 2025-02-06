@@ -687,3 +687,124 @@ game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 0)
 end
 end)
 end})
+Section.Players:Dropdown({
+	Name = "Fly Speed",
+	Multi = false,
+	Required = true,
+        Search = true,
+	Options = {"15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"},
+	Default = 1,
+	Callback = function(v)
+_G.SetSpeedFly = v
+end})
+_G.SetSpeedFly = 15
+Section.Players:Toggle({
+	Name = "Enabled Fly",
+	Default = false,
+	Callback = function(v)
+_G.StartFly = v
+if _G.StartFly == false then
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler:Destroy()
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler:Destroy()
+game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+end
+end
+while _G.StartFly do
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
+game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.CFrame = Workspace.CurrentCamera.CoordinateFrame
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = Vector3.new()
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X > 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X < 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z > 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z < 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
+end
+elseif game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") == nil and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") == nil then
+local bv = Instance.new("BodyVelocity")
+local bg = Instance.new("BodyGyro")
+
+bv.Name = "VelocityHandler"
+bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+bv.MaxForce = Vector3.new(0,0,0)
+bv.Velocity = Vector3.new(0,0,0)
+
+bg.Name = "GyroHandler"
+bg.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+bg.MaxTorque = Vector3.new(0,0,0)
+bg.P = 1000
+bg.D = 50
+end
+task.wait()
+end
+end})
+Section.Players:Keybind({
+	Name = "Fly",
+	Blacklist = false,
+        Default = Enum.KeyCode.F,
+	Callback = function(v)
+_G.StartFly = v
+end})
+
+Section.Players:Divider()
+local ClonedCollision = game:GetService("Players").LocalPlayer.Character.Collision:Clone()
+ClonedCollision.Name = "_CollisionClone"
+ClonedCollision.Massless = true
+ClonedCollision.Parent = game:GetService("Players").LocalPlayer.Character
+ClonedCollision.CanCollide = false
+ClonedCollision.CanQuery = false
+ClonedCollision.CustomPhysicalProperties = PhysicalProperties.new(0.01, 0.7, 0, 1, 1)
+if ClonedCollision:FindFirstChild("CollisionCrouch") then
+ClonedCollision.CollisionCrouch:Destroy()
+end
+task.spawn(function()
+while task.wait(0.23) do
+if _G.SpeedBypass and not _G.SeekSpeed then
+if ClonedCollision then
+ClonedCollision.Massless = false
+task.wait(0.23)
+if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Anchored then
+ClonedCollision.Massless = true
+task.wait(1)
+end
+ClonedCollision.Massless = true
+end
+end
+end
+end)
+Section.Players:Toggle({
+	Name = "Speed Bypass",
+	Default = false,
+	Callback = function(v)
+_G.SpeedBypass = v
+end})
+Section.Players:Toggle({
+	Name = "Invalid Fly,Speed",
+	Default = false,
+	Callback = function(v)
+_G.SeekSpeed = v
+end})
+Section.Players:Keybind({
+	Name = "Invalid Fly,Speed",
+	Blacklist = false,
+        Default = Enum.KeyCode.J,
+	Callback = function(v)
+_G.SeekSpeed = v
+end})
+
+
+Section.LocalPlayer:Toggle({
+	Name = "",
+	Default = false,
+	Callback = function(v)
+_G.SpeedBypass = v
+end})
