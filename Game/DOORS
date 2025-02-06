@@ -432,18 +432,6 @@ Section.Misc:Button({
 		{Name = "Cancel"}}})
 end})
 
-
-Section.Alert:Dropdown({
-	Name = "Select Entity Alert",
-	Search = true,
-	Multi = true,
-	Required = false,
-	Options = {"Rush","Ambush","Blitz","A60","A120","Glitch Ambush","Gloombat Swarm","Glitch Rush","Eyes","Lookman","Jeff The Killer","Seek Chase"},
-	Default = {},
-	Callback = function(v)
-_G.SelectEntityAlert = v
-end,}, "SelectAlert")
-
 Section.Alert:Toggle({
 	Name = "Alert Entity",
 	Default = false,
@@ -454,40 +442,40 @@ NotificationEntity = workspace.ChildAdded:Connect(function(v)
 if table.find(Entity,v.Name) then
 repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
 if v:IsDescendantOf(workspace) then
-if Options.SelectAlert.Value["Rush"] and v.Name == "RushMoving" then
+if v.Name == "RushMoving" then
 Alert("Rush has spawn!")
 end
-if Options.SelectAlert.Value["Ambush"] and v.Name == "AmbushMoving" then
+if v.Name == "AmbushMoving" then
 Alert("Ambush has spawn!")
 end
-if Options.SelectAlert.Value["Blitz"] and v.Name == "BackdoorRush" then
+if v.Name == "BackdoorRush" then
 Alert("Blitz has spawn!")
 end
-if Options.SelectAlert.Value["A60"] and v.Name == "A60" then
+if v.Name == "A60" then
 Alert("A60 has spawn!")
 end
-if Options.SelectAlert.Value["A120"] and v.Name == "A120" then
+if v.Name == "A120" then
 Alert("A120 has spawn!")
 end
-if Options.SelectAlert.Value["Glitch Ambush"]" and v.Name == "GlitchAmbush" then
+if v.Name == "GlitchAmbush" then
 Alert("Glitch Ambush has spawn!")
 end
-if Options.SelectAlert.Value["Glitch Rush"] and v.Name == "GlitchRush" then
+if v.Name == "GlitchRush" then
 Alert("Glitch Rush has spawn!")
 end
-if Options.SelectAlert.Value["Gloombat Swarm"] and v.Name == "GloombatSwarm" then
+if v.Name == "GloombatSwarm" then
 Alert("Gloombat Swarm has spawn!")
 end
-if Options.SelectAlert.Value["Eyes"] and v.Name == "Eyes" then
+if v.Name == "Eyes" then
 Alert("Eyes has spawn!")
 end
-if Options.SelectAlert.Value["Lookman"] and v.Name == "BackdoorLookman" then
+if v.Name == "BackdoorLookman" then
 Alert("Lookman has spawn!")
 end
-if Options.SelectAlert.Value["Jeff The Killer"] and v.Name == "JeffTheKiller" then
+if v.Name == "JeffTheKiller" then
 Alert("Jeff The Killer has spawn!")
 end
-if Options.SelectAlert.Value["Seek Chase"] and (v.Name == "SeekMoving" or v.Name == "SeekMovingNewClone") then
+if (v.Name == "SeekMoving" or v.Name == "SeekMovingNewClone") then
 Alert("Seek chase, goodluck!")
 end
 end
