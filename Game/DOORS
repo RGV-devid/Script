@@ -14,6 +14,13 @@ RemotesFolder = ReplicatedStorage.EntityInfo
 else
 RemotesFolder = ReplicatedStorage.RemotesFolder
 end
+function Alert(desc,time)
+Window:Notify({
+Title = Window.Settings.Title,
+Description = desc,
+Lifetime = time or 3
+})
+end
 local Library = loadstring(game:HttpGet("https://github.com/RGV-devid/Script/blob/main/Library/MacLib.lua?raw=true"))()
 
 local Window = Library:Window({
@@ -435,4 +442,22 @@ Section.Alert:Dropdown({
 	Default = {"Rush","Ambush","Blitz","A60","A120","Glitch Ambush","Gloombat Swarm","Glitch Rush","Eyes","Lookman","Jeff The Killer","Seek Chase"},
 	Callback = function(v)
 _G.SelectEntityAlert = v
+end})
+Section.Alert:Toggle({
+	Name = "Alert Entity",
+	Default = false,
+	Callback = function(v)
+if v then
+local Entity = {"SeekMovingNewClone","SeekMoving","GlitchAmbush","GlitchRush","BackdoorLookman","BackdoorRush","GloombatSwarm","Eyes","JeffTheKiller","RushMoving","AmbushMoving","A60","A120"}
+NotificationEntity = workspace.ChildAdded:Connect(function(v)
+if table.find(Entity,v.Name) then
+repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
+if v:IsDescendantOf(workspace) then
+if _G.SelectEntityAlert["Rush"] and v.Name == "RushMoving" then
+Alert("Rush has spawn!")
+end
+end
+end
+end)
+end
 end})
