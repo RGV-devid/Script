@@ -14,13 +14,6 @@ RemotesFolder = ReplicatedStorage.EntityInfo
 else
 RemotesFolder = ReplicatedStorage.RemotesFolder
 end
-function Alert(desc,time)
-Window:Notify({
-Title = Window.Settings.Title,
-Description = desc,
-Lifetime = time or 3
-})
-end
 local Library = loadstring(game:HttpGet("https://github.com/RGV-devid/Script/blob/main/Library/MacLib.lua?raw=true"))()
 
 local Window = Library:Window({
@@ -443,57 +436,105 @@ if table.find(Entity,v.Name) then
 repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
 if v:IsDescendantOf(workspace) then
 if v.Name == "RushMoving" then
-Alert("Rush has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Rush!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Rush!")
 end
 elseif v.Name == "AmbushMoving" then
-Alert("Ambush has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Ambush!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Ambush!")
 end
 elseif v.Name == "BackdoorRush" then
-Alert("Blitz has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Blitz!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Blitz!")
 end
 elseif v.Name == "A60" then
-Alert("A60 has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "A60!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] A60!")
 end
 elseif v.Name == "A120" then
-Alert("A120 has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "A120!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] A120!")
 end
 elseif v.Name == "GlitchAmbush" then
-Alert("Glitch Ambush has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Glitch Ambush!",
+Lifetime = 3
+})
 elseif v.Name == "GlitchRush" then
-Alert("Glitch Rush has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Glitch Rush!",
+Lifetime = 3
+})
 end
 elseif v.Name == "GloombatSwarm" then
-Alert("Gloombat Swarm has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Gloombat Swarm!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Gloombat Swarm!")
 end
 elseif v.Name == "Eyes" then
-Alert("Eyes has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Eyes!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Eyes!")
 end
 elseif v.Name == "BackdoorLookman" then
-Alert("Lookman has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Lookman!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Lookman!")
 end
 elseif v.Name == "JeffTheKiller" then
-Alert("Jeff The Killer has spawn!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Jeff The Killer!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] JeffTheKiller!")
 end
 elseif (v.Name == "SeekMoving" or v.Name == "SeekMovingNewClone") then
-Alert("Seek chase, goodluck!")
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Seek chase, goodluck!",
+Lifetime = 3
+})
 if _G.PlayChatAlert then
 game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Seek Chase Goodluck!")
 end
