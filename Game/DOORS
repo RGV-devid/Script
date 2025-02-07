@@ -1387,4 +1387,70 @@ else
 AntiJeff:Disconnect()
 end
 end})
+Section.Anti:Toggle({
+	Name = "Anti-Seek Chase",
+	Default = false,
+	Callback = function(v)
+_G.AntiSeekCar = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiSeekCar then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do 
+if v.Name == "TriggerEventCollision" then 
+v:Destroy()
+end 
+end 
+end
+end)
+end})
+end
+
+
+Section.Bypass:Toggle({
+	Name = "Anti Cheat Manipulate",
+	Default = false,
+	Callback = function(v)
+_G.ManipulateBypass = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.ManipulateBypass then
+game.Players.LocalPlayer.Character:PivotTo(game.Players.LocalPlayer.Character:GetPivot() + workspace.CurrentCamera.CFrame.LookVector * Vector3.new(1, 0, 1) * -100)
+end
+end)
+end})
+if Mines then
+Section.Bypass:Toggle({
+	Name = "Anti Cheat Bypass",
+	Default = false,
+	Callback = function(v)
+_G.LadderBypass = v
+task.spawn(function()
+while _G.LadderBypass do wait(1)
+if _G.LadderBypass and not workspace:FindFirstChild("Ladder_Bypass") then
+local progressPart = Instance.new("Part", workspace) do
+progressPart.Anchored = true
+progressPart.CanCollide = false
+progressPart.Name = "Ladder_Bypass"
+progressPart.Transparency = 1
+end
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Find ladder and climb it!",
+Lifetime = 10
+})
+if _G.LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
+task.wait()
+game.Players.LocalPlayer.Character:SetAttribute("Climbing", false)
+Window:Notify({
+Title = Window.Settings.Title,
+Description = "Anticheat bypass complete!",
+Lifetime = 3
+})
+end
+else
+if workspace:FindFirstChild("Ladder_Bypass") then 
+workspace:FindFirstChild("Ladder_Bypass"):Destroy() 
+end
+end
+end
+end)
+end})
 end
