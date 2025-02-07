@@ -83,6 +83,7 @@ local Section = {
 
         Anti = Tabs.Entities:Section({ Side = "Left" }),
         Bypass = Tabs.Entities:Section({ Side = "Right" }),
+        Trolling = Tabs.Entities:Section({ Side = "Right" }),
 }
 local Header = {
 Death = Section.Death:Header({Name = "Death"}),
@@ -99,7 +100,8 @@ LocalPlayer = Section.LocalPlayer:Header({Name = "LocalPlayer"}),
 Body = Section.Body:Header({Name = "Body"}),
 
 Anti = Section.Anti:Header({Name = "Anti"}),
-Bypass = Section.Body:Header({Name = "Bypass"})
+Bypass = Section.Bypass:Header({Name = "Bypass"}),
+Trolling = Section.Trolling:Header({Name = "Trolling"}),
 }
 
 Section.Death:Dropdown({
@@ -876,7 +878,7 @@ Section.Body:Colorpicker({
 	Name = "Color Body",
 	Default = Color3.fromRGB(255, 255, 255),
 	Callback = function(v)
-_G.BodyColor = v or Color3.new(1,1,1)
+_G.BodyColor = v
 task.spawn(function()
 while _G.BodyColor do wait(1)
 game.Players.LocalPlayer.Character.Head.Color = _G.BodyColor or Color3.new(1,1,1)
@@ -1142,7 +1144,7 @@ Section.Anti:Toggle({
 	Default = false,
 	Callback = function(v)
 _G.AntiA90 = v
-while _G.AntiA90 do wait(1)
+if _G.AntiA90 do
 RemotesFolder.A90.Name = "_A90"
 game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = nil
 else
@@ -1173,6 +1175,7 @@ RemotesFolder.Dread:FireServer(true)
 end
 end)
 end})
+end
 if Retro then
 Section.Anti:Toggle({
 	Name = "Anti-Lava Part",
