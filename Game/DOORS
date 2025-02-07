@@ -1457,3 +1457,28 @@ end
 end)
 end})
 end
+
+
+Section.Trolling:Toggle({
+	Name = "Lag Moving",
+	Default = false,
+	Callback = function(v)
+_G.LagBody = v
+while _G.LagBody and task.wait(0.5) do
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+wait(0.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end
+end})
+Section.Trolling:Toggle({
+	Name = "Spaming MotorReplication",
+	Default = false,
+	Callback = function(v)
+if v then
+SpoofMotor = game:GetService("RunService").Heartbeat:Connect(function()
+RemotesFolder.MotorReplication:FireServer(math.random(1,100000),math.random(1,100000),math.random(1,100000),false)
+end)
+else
+SpoofMotor:Disconnect()
+end
+end})
