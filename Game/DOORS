@@ -861,7 +861,9 @@ Section.LocalPlayer:Toggle({
 	Callback = function(v)
 _G.Jump = v
 game:GetService("RunService").RenderStepped:Connect(function()
-game.Players.LocalPlayer.Character:SetAttribute("CanJump", _G.Jump)
+if _G.Jump then
+game.Players.LocalPlayer.Character:SetAttribute("CanJump", true)
+end
 end)
 end})
 Section.LocalPlayer:Toggle({
@@ -870,7 +872,9 @@ Section.LocalPlayer:Toggle({
 	Callback = function(v)
 _G.CrouchSpoof = v
 game:GetService("RunService").RenderStepped:Connect(function()
-RemotesFolder.Crouch:FireServer(_G.CrouchSpoof)
+if _G.CrouchSpoof then
+RemotesFolder.Crouch:FireServer(true)
+end
 end)
 end})
 end
@@ -1144,7 +1148,7 @@ Section.Anti:Toggle({
 	Default = false,
 	Callback = function(v)
 _G.AntiA90 = v
-if _G.AntiA90 do
+if _G.AntiA90 then
 RemotesFolder.A90.Name = "_A90"
 game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = nil
 else
