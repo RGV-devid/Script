@@ -64,7 +64,7 @@ local Tabs = {
      Entities = Groups.Group:Tab({ Name = "Entities", Image = "rbxassetid://10734951847" }),
      Visual = Groups.Group:Tab({ Name = "Visual", Image = "rbxassetid://10723396107" }),
      ESP = Groups.Group:Tab({ Name = "ESP", Image = "rbxassetid://10734954538" }),
-     Settings = Groups.Group:Tab({ Name = "Settings", Image = "rbxassetid://10734950309" })
+     Settings = Groups.Group:Tab({ Name = "Settings", Image = "rbxassetid://10734950309" }),
 }
 
 local Section = {
@@ -79,7 +79,10 @@ local Section = {
 
         Players = Tabs.Players:Section({ Side = "Left" }),
         LocalPlayer = Tabs.Players:Section({ Side = "Right" }),
-        Body = Tabs.Players:Section({ Side = "Left" })
+        Body = Tabs.Players:Section({ Side = "Left" }),
+
+        Anti = Tabs.Entities:Section({ Side = "Left" }),
+        Bypass = Tabs.Entities:Section({ Side = "Right" }),
 }
 local Header = {
 Death = Section.Death:Header({Name = "Death"}),
@@ -93,7 +96,10 @@ Alert = Section.Alert:Header({Name = "Alert"}),
 
 Players = Section.Players:Header({Name = "Players"}),
 LocalPlayer = Section.LocalPlayer:Header({Name = "LocalPlayer"}),
-Body = Section.Body:Header({Name = "Body"})
+Body = Section.Body:Header({Name = "Body"}),
+
+Anti = Section.Anti:Header({Name = "Anti"}),
+Bypass = Section.Body:Header({Name = "Bypass"})
 }
 
 Section.Death:Dropdown({
@@ -781,7 +787,7 @@ Section.Players:Toggle({
 _G.SpeedBypass = v
 end})
 Section.Players:Toggle({
-	Name = "Invalid Fly,Speed",
+	Name = "Invalid Speed",
 	Default = false,
 	Callback = function(v)
 _G.SeekSpeed = v
@@ -870,7 +876,7 @@ Section.Body:Colorpicker({
 	Name = "Color Body",
 	Default = Color3.fromRGB(255, 255, 255),
 	Callback = function(v)
-_G.BodyColor = v
+_G.BodyColor = v or Color3.new(1,1,1)
 task.spawn(function()
 while _G.BodyColor do wait(1)
 game.Players.LocalPlayer.Character.Head.Color = _G.BodyColor or Color3.new(1,1,1)
@@ -948,3 +954,437 @@ end
 end
 end
 end})
+
+
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiSnare then
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Snare") then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if v.Name == "Snare" then 
+v.Hitbox.CanTouch = not _G.AntiSnare
+end 
+end 
+end 
+end 
+end)
+Section.Anti:Toggle({
+	Name = "Anti-Snare",
+	Default = false,
+	Callback = function(v)
+_G.AntiSnare = v
+end})
+Section.Anti:Toggle({
+	Name = "Anti-Dupe",
+	Default = false,
+	Callback = function(v)
+_G.AntiDupe = v
+if _G.AntiDupe then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" and v:IsA("Model") then
+v.Hidden.CanTouch = not _G.AntiDupe
+if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
+v.LockPart.UnlockPrompt.Enabled = not true
+end
+end
+end
+AntiDupe = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" and v:IsA("Model") then
+v.Hidden.CanTouch = not _G.AntiDupe
+if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
+v.LockPart.UnlockPrompt.Enabled = not true
+end
+end
+end
+end)
+else
+AntiDupe:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" and v:IsA("Model") then
+v.Hidden.CanTouch = not false
+if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
+v.LockPart.UnlockPrompt.Enabled = not false
+end
+end
+end
+end
+end})
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiChandelier then 
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("ChandelierObstruction") then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if v.Name == "ChandelierObstruction" then 
+v.HurtPart.CanTouch = not _G.AntiChandelier
+end 
+end 
+end 
+end 
+end)
+Section.Anti:Toggle({
+	Name = "Anti-Chandelier",
+	Default = false,
+	Callback = function(v)
+_G.AntiChandelier = v
+end})
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiSeekArms then
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Seek_Arm") then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if v.Name == "Seek_Arm" then 
+v.AnimatorPart.CanTouch = not _G.AntiSeekArms
+end 
+end 
+end 
+end 
+end)
+Section.Anti:Toggle({
+	Name = "Anti-Seek Arms",
+	Default = false,
+	Callback = function(v)
+_G.AntiSeekArms = v
+end})
+game:GetService("RunService").RenderStepped:Connect(function()
+if not (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("Collision")) then return end
+if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
+if not Fools then
+for _, v in workspace:GetChildren() do
+if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
+RemotesFolder.MotorReplication:FireServer(-650)
+break
+end
+end
+end
+end
+if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
+if Fools then
+for _, v in workspace:GetChildren() do
+if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
+RemotesFolder.MotorReplication:FireServer(0,120,0,false)
+break
+end
+end
+end
+end
+if workspace:FindFirstChild("BackdoorLookman") and _G.AntiLookman then
+for _, v in workspace:GetChildren() do
+if v.Name == "BackdoorLookman" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
+RemotesFolder.MotorReplication:FireServer(-650)
+break
+end
+end
+end
+end)
+Section.Anti:Toggle({
+	Name = "Anti-Eyes",
+	Default = false,
+	Callback = function(v)
+_G.AntiEyes = v
+end})
+Section.Anti:Toggle({
+	Name = "Anti-Lookman",
+	Default = false,
+	Callback = function(v)
+_G.AntiLookman = v
+end})
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.AntiGiggle then
+for _, room in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetChildren()) do
+if room.Name == "GiggleCeiling" then
+room.Hitbox.CanTouch = not _G.AntiGiggle
+end
+end
+end
+end)
+end)
+if Mines then
+Section.Anti:Toggle({
+	Name = "Anti-Giggle",
+	Default = false,
+	Callback = function(v)
+_G.AntiGiggle = v
+end})
+end
+Section.Anti:Toggle({
+	Name = "Anti-Screech",
+	Default = false,
+	Callback = function(v)
+_G.AntiScreech = v
+if _G.AntiScreech then
+for _,v in pairs(workspace.Camera:GetDescendants()) do
+if v.Name == "Screech" then
+v:Destroy()
+elseif v.Name == "GlitchScreech" then
+v:Destroy()
+elseif v.Name == "RetroScreech" then
+v:Destroy()
+end
+end
+AntiScreech = workspace.CurrentCamera.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace.Camera:GetDescendants()) do
+if v.Name == "Screech" then
+v:Destroy()
+elseif v.Name == "GlitchScreech" then
+v:Destroy()
+elseif v.Name == "RetroScreech" then
+v:Destroy()
+end
+end
+end)
+RemotesFolder.Screech.Name = "_Screech"
+else
+AntiScreech:Disconnect()
+RemotesFolder._Screech.Name = "Screech"
+end
+end})
+Section.Anti:Toggle({
+	Name = "Anti-A90",
+	Default = false,
+	Callback = function(v)
+_G.AntiA90 = v
+while _G.AntiA90 do wait(1)
+RemotesFolder.A90.Name = "_A90"
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = nil
+else
+RemotesFolder._A90.Name = "A90"
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare
+end
+end})
+Section.Anti:Toggle({
+	Name = "Anti-Halt",
+	Default = false,
+	Callback = function(v)
+_G.AntiHalt = v
+while _G.AntiHalt do wait(0.1)
+game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade.Parent = game.Workspace
+end
+end})
+if not Fools then
+Section.Anti:Toggle({
+	Name = "Anti-Dread",
+	Default = false,
+	Callback = function(v)
+_G.AntiDread = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiDread then
+RemotesFolder.Dread:FireServer(false)
+else
+RemotesFolder.Dread:FireServer(true)
+end
+end)
+end})
+if Retro then
+Section.Anti:Toggle({
+	Name = "Anti-Lava Part",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Lava" then
+v.CanTouch = false
+end
+end
+AntiLava = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Lava" then
+v.CanTouch = false
+end
+end
+end)
+else
+AntiLava:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Lava" then
+v.CanTouch = true
+end
+end
+end
+end})
+Section.Anti:Toggle({
+	Name = "Anti-Wall",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "TheWall" then
+v.CanTouch = false
+end
+end
+AntiWall = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "TheWall" then
+v.CanTouch = false
+end
+end
+end)
+else
+AntiWall:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "TheWall" then
+v.CanTouch = true
+end
+end
+end
+end})
+Section.Anti:Toggle({
+	Name = "Anti-Drakobloxxers",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Drakobloxxer" then
+v:Destroy()
+end
+end
+AntiDrakobloxxer = workspace.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Drakobloxxer" then
+v:Destroy()
+end
+end
+end)
+else
+AntiDrakobloxxer:Disconnect()
+end
+end})
+end
+if Fools then
+Section.Anti:Toggle({
+	Name = "Anti-Banana",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "BananaPeel" then
+v.CanTouch = false
+v.Transparency = 0.75
+end
+end
+AntiBanana = workspace.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "BananaPeel" then
+v.CanTouch = false
+v.Transparency = 0.75
+end
+end
+end)
+else
+AntiBanana:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "BananaPeel" then
+v.CanTouch = true
+v.Transparency = 0
+end
+end
+end
+end})
+Section.Anti:Toggle({
+	Name = "Anti-Jeff",
+	Default = false,
+	Callback = function(v)
+if v then
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Knife.CanTouch = false 
+v.Knife.CanCollide = false
+v:Destroy()
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Head.CanTouch = false 
+v.Head.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.HumanoidRootPart.CanTouch = false 
+v.HumanoidRootPart.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Arm"].CanTouch = false 
+v["Left Arm"].CanCollide = false
+end 
+end
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Leg"].CanTouch = false 
+v["Left Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Arm"].CanTouch = false 
+v["Right Arm"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Leg"].CanTouch = false 
+v["Right Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do
+if v.Name == "JeffTheKiller" then 
+v.Torso.CanTouch = false 
+v.Torso.CanCollide = false
+end 
+end 
+AntiJeff = workspace.ChildAdded:Connect(function(child)
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Knife.CanTouch = false 
+v.Knife.CanCollide = false
+v:Destroy()
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Head.CanTouch = false 
+v.Head.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.HumanoidRootPart.CanTouch = false 
+v.HumanoidRootPart.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Arm"].CanTouch = false 
+v["Left Arm"].CanCollide = false
+end 
+end
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Leg"].CanTouch = false 
+v["Left Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Arm"].CanTouch = false 
+v["Right Arm"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Leg"].CanTouch = false 
+v["Right Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do
+if v.Name == "JeffTheKiller" then 
+v.Torso.CanTouch = false 
+v.Torso.CanCollide = false
+end 
+end 
+end)
+else
+AntiJeff:Disconnect()
+end
+end})
+end
