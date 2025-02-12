@@ -1,0 +1,5 @@
+workspace.Particle.Lsplash.ChildAdded:Connect(function(v)
+if v.Name == "Explosion" then
+v:Destroy()
+end
+end)
