@@ -3,3 +3,148 @@ if v.Name == "Explosion" then
 v:Destroy()
 end
 end)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "Unit 1"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+local Frame = Instance.new("Frame")
+Frame.Name = "Frame"
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(55,55,55)
+Frame.BackgroundTransparency = 0.75
+Frame.Position = UDim2.new(0.945, 0, -0.08, 0)
+Frame.Size = UDim2.new(0, 60, 0, 60)
+
+local Toggle = Instance.new("TextButton")
+Toggle.Name = "Toggle"
+Toggle.Parent = Frame
+Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Toggle.BackgroundTransparency = 0.75
+Toggle.Position = UDim2.new(0, 0, 0, 0)
+Toggle.Size = UDim2.new(0, 60, 0, 60)
+Toggle.Font = Enum.Font.GothamBold
+Toggle.Text = "I"
+Toggle.TextTransparency = 0.25
+Toggle.TextColor3 = Color3.fromRGB(248, 248, 248)
+Toggle.TextSize = 28.000
+Toggle.Draggable = false
+
+local Ui = Instance.new("UIStroke",Frame)
+Ui.Thickness = 6
+Ui.Transparency = 0.5
+Ui.Color = Color3.new(0,0,0)
+
+Toggle.MouseButton1Click:connect(function()
+    local args = {
+    [1] = _G.UnitI,
+    [2] = CFrame.new(game.Players.LocalPlayer.Character.Head.Position) * CFrame.Angles(-0, 0, -0)
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("ChangeMode"):InvokeServer(unpack(args))
+end)
+
+local ScreenGui2 = Instance.new("ScreenGui")
+ScreenGui2.Name = "Unit 2"
+ScreenGui2.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui2.ResetOnSpawn = false
+
+local Frame2 = Instance.new("Frame")
+Frame2.Name = "Frame2"
+Frame2.Parent = ScreenGui2
+Frame2.BackgroundColor3 = Color3.fromRGB(55,55,55)
+Frame2.BackgroundTransparency = 0.75
+Frame2.Position = UDim2.new(0.945, 0, 0.04, 0)
+Frame2.Size = UDim2.new(0, 60, 0, 60)
+
+local Toggle2 = Instance.new("TextButton")
+Toggle2.Name = "Toggle2"
+Toggle2.Parent = Frame2
+Toggle2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Toggle2.BackgroundTransparency = 0.75
+Toggle2.Position = UDim2.new(0, 0, 0, 0)
+Toggle2.Size = UDim2.new(0, 60, 0, 60)
+Toggle2.Font = Enum.Font.GothamBold
+Toggle2.Text = "II"
+Toggle2.TextTransparency = 0.25
+Toggle2.TextColor3 = Color3.fromRGB(248, 248, 248)
+Toggle2.TextSize = 28.000
+Toggle2.Draggable = false
+
+local Ui2 = Instance.new("UIStroke",Frame2)
+Ui2.Thickness = 6
+Ui2.Transparency = 0.5
+Ui2.Color = Color3.new(0,0,0)
+
+Toggle2.MouseButton1Click:connect(function()
+    local args = {
+    [1] = _G.UnitII,
+    [2] = CFrame.new(game.Players.LocalPlayer.Character.Head.Position) * CFrame.Angles(-0, 0, -0)
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("ChangeMode"):InvokeServer(unpack(args))
+end)
+
+local ScreenGui3 = Instance.new("ScreenGui")
+ScreenGui.Name = "Unit 3"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+local Frame3 = Instance.new("Frame")
+Frame3.Name = "Frame3"
+Frame3.Parent = ScreenGui3
+Frame3.BackgroundColor3 = Color3.fromRGB(55,55,55)
+Frame3.BackgroundTransparency = 0.75
+Frame3.Position = UDim2.new(0.945, 0, 0.16, 0)
+Frame3.Size = UDim2.new(0, 60, 0, 60)
+
+local Toggle3 = Instance.new("TextButton")
+Toggle3.Name = "Toggle3"
+Toggle3.Parent = Frame3
+Toggle3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Toggle3.BackgroundTransparency = 0.75
+Toggle3.Position = UDim2.new(0, 0, 0, 0)
+Toggle3.Size = UDim2.new(0, 60, 0, 60)
+Toggle3.Font = Enum.Font.GothamBold
+Toggle3.Text = "III"
+Toggle3.TextTransparency = 0.25
+Toggle3.TextColor3 = Color3.fromRGB(248, 248, 248)
+Toggle3.TextSize = 28.000
+Toggle3.Draggable = false
+
+local Ui3 = Instance.new("UIStroke",Frame3)
+Ui3.Thickness = 6
+Ui3.Transparency = 0.5
+Ui3.Color = Color3.new(0,0,0)
+
+Toggle3.MouseButton1Click:connect(function()
+    local args = {
+    [1] = _G.UnitIII,
+    [2] = CFrame.new(game.Players.LocalPlayer.Character.Head.Position) * CFrame.Angles(-0, 0, -0)
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("ChangeMode"):InvokeServer(unpack(args))
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
