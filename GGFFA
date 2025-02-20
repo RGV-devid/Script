@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "YOUHUB",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "Welcome to Code Nexus",
+   LoadingTitle = "YOUHUB | Gun Ground FFA",
    LoadingSubtitle = "by rechedmcvn",
    Theme = "Ocean", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -13,7 +13,7 @@ local Window = Rayfield:CreateWindow({
    ConfigurationSaving = {
       Enabled = true,
       FolderName = nil, -- Create a custom folder for your hub/game
-      FileName = "Portal hub"
+      FileName = "You hub?"
    },
 
    telegram = {
@@ -22,15 +22,15 @@ local Window = Rayfield:CreateWindow({
       RememberJoins = true -- Set this to false to make them join the telegram every time they load it up
    },
 
-   KeySystem = false, -- Set this to true to use our key system
+   KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "Untitled",
+      Title = "Key System",
       Subtitle = "Key System",
-      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      Note = "Key is 'OpenGUI'", -- Use this to tell the user how to get a key
       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+      Key = {"OpenGUI"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
 
@@ -72,40 +72,63 @@ print("Hitbox script is active.")
    end,
 })
 local Button = MainTab:CreateButton({
-   Name = "Aimbot Near",
+   Name = "Auto Fast Reload",
    Callback = function()
--- Variables
-local player = game.Players.LocalPlayer
+while wait() do
+
+local RunService = game:GetService("RunService")
+local players = game:GetService("Players")
+local workspace = game:GetService("Workspace")
+local plr = players.LocalPlayer
 local camera = workspace.CurrentCamera
-local range = 7.5 -- Maximum range for aimlock
-local targetPart = "Head" -- Part of the character to lock onto
+local mouse = plr:GetMouse()
+local hitEffect = "Gib_F"
 
--- Function to get the closest visible target
-
-
--- Function to lock the camera onto the target
-local function lockCamera(target)
-    if target then
-        camera.CFrame = CFrame.new(camera.CFrame.Position, target.Position)
-    end
-end
-
--- Update the camera every frame
-game:GetService("RunService").RenderStepped:Connect(function()
-    local target = getClosestTarget()
-    if target then
-        lockCamera(target)
-    end
-end)
-
--- Output feedback
-print("Camera Aimlock script is active.")   
-   end,
-})
-
-
-
-
+if plr.Character then
+                local folder = plr.Character:FindFirstChildWhichIsA("Tool")
+                
+                if folder and folder:FindFirstChild("Configuration") then
+                    for _, v in ipairs(folder.Configuration:GetChildren()) do
+                        if v.Name == "FireRate" and not e then
+                            e = true
+                            v.Value = v.Value * 1
+                        end 
+                        if v.Name == "reloadTime" then
+                            v.Value = 0
+                        end
+                        if v.Name == "DamageDropoff" then
+                            v.Value = 100
+                        end
+                        if v.Name == "isAuto" then
+                            v.Value = true
+                        end
+                        if v.Name == "DelayedShell" then
+                            v.Value = false
+                        end
+                        if v.Name == "Recoil" then
+                            if recoilEnabled then
+                                v.Value = true
+                            end
+                        end
+                    end
+                    if hitEffectEnabled then
+                        local heffect = folder.Configuration:FindFirstChild("HitEffect")
+                        if heffect then
+                            heffect.Value = hitEffect
+                        else
+                            heffect = Instance.new("StringValue")
+                            heffect.Name = "HitEffect"
+                            heffect.Value = hitEffect
+                            heffect.Parent = folder.Configuration
+                        end
+                    end
+                else
+                    e = false
+                end
+            end
+            wait()
+        end 
+end})
 
 
 
