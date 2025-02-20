@@ -1,0 +1,133 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "YOUHUB",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "Welcome to Code Nexus",
+   LoadingSubtitle = "by rechedmcvn",
+   Theme = "Ocean", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Portal hub"
+   },
+
+   telegram = {
+      Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "invitelink", -- The telegram invite code, do not include t.me/Portal_hub_bugs E.g. t.me/Portal_hub_bugs would be ABCD
+      RememberJoins = true -- Set this to false to make them join the telegram every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local MainTab = Window:CreateTab("Main", 4483362458) -- Title, Image
+
+local Button = MainTab:CreateButton({
+   Name = "Hitbox",
+   Callback = function()
+-- Variables
+local player = game.Players.LocalPlayer
+local camera = workspace.CurrentCamera
+local range = 10 -- Maximum range for aimlock
+local targetPart = "HumanoidRootPart" -- Part of the character to lock onto
+
+-- Function to get the closest visible target
+local function getClosestTarget()
+    local closestTarget = nil
+    local shortestDistance = range
+
+    for _, otherPlayer in pairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild(targetPart) then
+            otherPlayer.Character.HumanoidRootPart.Size = Vector3.new(30,30,30)
+        end
+    end
+
+    return closestTarget
+end
+
+-- Update the camera every frame
+game:GetService("RunService").RenderStepped:Connect(function()
+    local target = getClosestTarget()   
+    if target then  
+        getClosestTarget()   
+    end
+end)
+
+-- Output feedback
+print("Hitbox script is active.")   
+   end,
+})
+local Button = MainTab:CreateButton({
+   Name = "Aimbot Near",
+   Callback = function()
+-- Variables
+local player = game.Players.LocalPlayer
+local camera = workspace.CurrentCamera
+local range = 7.5 -- Maximum range for aimlock
+local targetPart = "Head" -- Part of the character to lock onto
+
+-- Function to get the closest visible target
+
+
+-- Function to lock the camera onto the target
+local function lockCamera(target)
+    if target then
+        camera.CFrame = CFrame.new(camera.CFrame.Position, target.Position)
+    end
+end
+
+-- Update the camera every frame
+game:GetService("RunService").RenderStepped:Connect(function()
+    local target = getClosestTarget()
+    if target then
+        lockCamera(target)
+    end
+end)
+
+-- Output feedback
+print("Camera Aimlock script is active.")   
+   end,
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
