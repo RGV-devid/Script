@@ -74,7 +74,7 @@ print("Hitbox script is active.")
 local Button = MainTab:CreateButton({
    Name = "Auto Fast Reload",
    Callback = function()
-while wait() do
+game:GetService("RunService").RenderStepped:Connect(function()
 
 local RunService = game:GetService("RunService")
 local players = game:GetService("Players")
@@ -127,7 +127,7 @@ if plr.Character then
                 end
             end
             wait()
-        end 
+        end )
 end})
 
 
