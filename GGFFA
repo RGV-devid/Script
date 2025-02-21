@@ -16,12 +16,6 @@ local Window = Rayfield:CreateWindow({
       FileName = "You hub?"
    },
 
-   telegram = {
-      Enabled = true,
-      Invite = "invitelink",
-      RememberJoins = true
-   },
-
    KeySystem = true,
    KeySettings = {
       Title = "Key System",
@@ -34,48 +28,79 @@ local Window = Rayfield:CreateWindow({
    }
 })
 
-local MainTab = Window:CreateTab("Main", 4483362458) -- Title, Image
-
-local Button = MainTab:CreateToggle({
-   Name = "Hitbox",
+local MainTab = Window:CreateTab("Main", 4483362458)
+MainTab:CreateSection("World")
+MainTab:CreateToggle({
+   Name = "Player Hitbox",
    Callback = function(v)
 _G.Hitbox = v
-local player = game.Players.LocalPlayer
-local camera = workspace.CurrentCamera
-local range = 10 -- Maximum range for aimlock
-local targetPart = "HumanoidRootPart" -- Part of the character to lock onto
-
--- Function to get the closest visible target
-local function getClosestTarget()
-    local closestTarget = nil
-    local shortestDistance = range
-
-    for _, otherPlayer in pairs(game.Players:GetPlayers()) do
-        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild(targetPart) then
-            otherPlayer.Character.HumanoidRootPart.Size = Vector3.new(30,30,30)
+local function Hitbox()
+    local HitboxNil = nil
+    for _, Player in pairs(game.Players:GetPlayers()) do
+        if Player ~= player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            Player.Character.HumanoidRootPart.Size = Vector3.new(30,30,30)
         end
     end
-
-    return closestTarget
+    return HitboxNil
 end
-
--- Update the camera every frame
-game:GetService("RunService").RenderStepped:Connect(function()
-    local target = getClosestTarget()   
-    if target then  
-        getClosestTarget()   
+local function UnHitbox()
+    local UnHitboxNil = nil
+    for _, Player in pairs(game.Players:GetPlayers()) do
+        if Player ~= player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            Player.Character.HumanoidRootPart.Size = Vector3.new(1,1,1)
+        end
     end
-end)
-
--- Output feedback
-print("Hitbox script is active.")   
-   end,
-})
-local Button = MainTab:CreateButton({
-   Name = "Auto Fast Reload",
-   Callback = function()
+    return UnHitboxNil
+end
 game:GetService("RunService").RenderStepped:Connect(function()
+    if _G.Hitbox then  
+        Hitbox()
+    else
+        UnHitbox()
+    end
+  end)
+end})
+MainTab:CreateSection("Gun")
+MainTab:CreateSlider({
+   Name = "Reload Time",
+   Range = {0, 3},
+   Increment = 1,
+   CurrentValue = 0.3,
+   Callback = function(v)
+_G.ReloadTime = v
+end})
+MainTab:CreateSlider({
+   Name = "Fire Rate",
+   Range = {0, 1},
+   Increment = 1,
+   CurrentValue = 0.3,
+   Callback = function(v)
+_G.FireRate = v
+end})
+MainTab:CreateSlider({
+   Name = "Damage Drop Off",
+   Range = {0, 100},
+   Increment = 1,
+   CurrentValue = 0,
+   Callback = function(v)
+_G.DamageDropOff = v
+end})
+MainTab:CreateToggle({
+   Name = "Auto Force",
+   Callback = function(v)
+_G.AutoForce = v
+end})
+MainTab:CreateToggle({
+   Name = "Rapid Shotguns",
+   Callback = function(v)
+_G.RapidShotguns = not v
+end})
 
+MainTab:CreateToggle({
+   Name = "Enabled",
+   Callback = function(v)
+_G.EnabledSettingGun = v
+game:GetService("RunService").RenderStepped:Connect(function()
 local RunService = game:GetService("RunService")
 local players = game:GetService("Players")
 local workspace = game:GetService("Workspace")
@@ -84,42 +109,26 @@ local camera = workspace.CurrentCamera
 local mouse = plr:GetMouse()
 local hitEffect = "Gib_F"
 
-if plr.Character then
+if _G.EnabledSettingGun and plr.Character then
                 local folder = plr.Character:FindFirstChildWhichIsA("Tool")
                 
                 if folder and folder:FindFirstChild("Configuration") then
                     for _, v in ipairs(folder.Configuration:GetChildren()) do
                         if v.Name == "FireRate" and not e then
                             e = true
-                            v.Value = v.Value * 1
+                            v.Value = v.Value * _G.FireRate
                         end 
                         if v.Name == "reloadTime" then
-                            v.Value = 0
+                            v.Value = _G.ReloadTime
                         end
                         if v.Name == "DamageDropoff" then
-                            v.Value = 100
+                            v.Value = _G.DamageDropOff
                         end
                         if v.Name == "isAuto" then
-                            v.Value = true
+                            v.Value = _G.AutoForce
                         end
                         if v.Name == "DelayedShell" then
-                            v.Value = false
-                        end
-                        if v.Name == "Recoil" then
-                            if recoilEnabled then
-                                v.Value = true
-                            end
-                        end
-                    end
-                    if hitEffectEnabled then
-                        local heffect = folder.Configuration:FindFirstChild("HitEffect")
-                        if heffect then
-                            heffect.Value = hitEffect
-                        else
-                            heffect = Instance.new("StringValue")
-                            heffect.Name = "HitEffect"
-                            heffect.Value = hitEffect
-                            heffect.Parent = folder.Configuration
+                            v.Value = _G.RapidShotguns
                         end
                     end
                 else
