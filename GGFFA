@@ -1,4 +1,5 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/RGV-devid/Scripts/refs/heads/main/ESP"))()
 
 local Window = Rayfield:CreateWindow({
    Name = "YOUHUB",
@@ -67,7 +68,7 @@ MainTab:CreateSection("Gun")
 MainTab:CreateSlider({
    Name = "Reload Time",
    Range = {0, 3},
-   Increment = 1,
+   Increment = 2,
    CurrentValue = 0.3,
    Callback = function(v)
 _G.ReloadTime = v
@@ -75,7 +76,7 @@ end})
 MainTab:CreateSlider({
    Name = "Fire Rate",
    Range = {0, 1},
-   Increment = 1,
+   Increment = 2,
    CurrentValue = 0.3,
    Callback = function(v)
 _G.FireRate = v
@@ -141,14 +142,43 @@ if _G.EnabledSettingGun and plr.Character then
             wait()
         end)
 end})
-
-
-
-
-
-
-
-
+MainTab:CreateSection("ESP")
+MainTab:CreateToggle({
+   Name = "Players ESP",
+   Callback = function(v)
+if v then
+for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
+if Player ~= game:GetService("Players").LocalPlayer and not Player:FindFirstChild("PlayerESP") then
+LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n(@" .. Player.Name .. ")", Color3.new(1,1,1), 14, "PlayerESP")
+end
+end
+PlayersESP = workspace.ChildAdded:Connect(function()
+for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
+if Player ~= game:GetService("Players").LocalPlayer and not Player:FindFirstChild("PlayerESP") then
+LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n(@" .. Player.Name .. ")", Color3.new(1,1,1), 14, "PlayerESP")
+end
+end
+end)
+else
+PlayersESP:Disconnect()
+end
+end})
+MainTab:CreateSection("Settings ESP")
+MainTab:CreateToggle({
+   Name = "Rainbow ESP",
+   Callback = function(v)
+getgenv().RainbowESP = v
+end})
+MainTab:CreateToggle({
+   Name = "Distance ESP",
+   Callback = function(v)
+getgenv().DistanceESP = v
+end})
+MainTab:CreateToggle({
+   Name = "Tracer ESP",
+   Callback = function(v)
+getgenv().TracerESP = v
+end})
 
 
 
