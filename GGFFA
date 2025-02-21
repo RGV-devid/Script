@@ -34,20 +34,23 @@ MainTab:CreateToggle({
    Name = "Player Hitbox",
    Callback = function(v)
 _G.Hitbox = v
+local player = game.Players.LocalPlayer
+local targetPart = "HumanoidRootPart"
+
 local function Hitbox()
     local HitboxNil = nil
-    for _, Player in pairs(game.Players:GetPlayers()) do
-        if Player ~= player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            Player.Character.HumanoidRootPart.Size = Vector3.new(30,30,30)
+    for _, otherPlayer in pairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild(targetPart) then
+            otherPlayer.Character.HumanoidRootPart.Size = Vector3.new(30,30,30)
         end
     end
     return HitboxNil
 end
 local function UnHitbox()
     local UnHitboxNil = nil
-    for _, Player in pairs(game.Players:GetPlayers()) do
-        if Player ~= player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            Player.Character.HumanoidRootPart.Size = Vector3.new(1.5,1.5,1.5)
+    for _, otherPlayer in pairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild(targetPart) then
+            otherPlayer.Character.HumanoidRootPart.Size = Vector3.new(1.5,1.5,1.5)
         end
     end
     return UnHitboxNil
