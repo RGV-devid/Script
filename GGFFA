@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/RGV-devid/Scripts/refs/heads/main/ESP"))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "YOUHUB",
+   Name = "YOUHUB | Gun Ground FFA - v0.0.2",
    Icon = 95073582077930,
    LoadingTitle = "YOUHUB | Gun Ground FFA",
    LoadingSubtitle = "by rechedmcvn",
@@ -164,6 +164,11 @@ PlayersESP:Disconnect()
 end
 end})
 MainTab:CreateSection("Settings ESP")
+MainTab:CreateToggle({
+   Name = "Text ESP",
+   Callback = function(v)
+getgenv().TextESP = v
+end})
 MainTab:CreateToggle({
    Name = "Rainbow ESP",
    Callback = function(v)
