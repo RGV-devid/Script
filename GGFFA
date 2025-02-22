@@ -73,8 +73,10 @@ game:GetService("RunService").RenderStepped:Connect(function()
 local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
 if Tool:FindFirstChild("Configuration") then
 for _, v in ipairs(Tool.Configuration:GetChildren()) do
+if v:FindFirstChild("reloadTime") then
 if _G.FastReload and v.Name == "reloadTime" then
 v.Value = 0
+end
 end
 end
 end
@@ -88,8 +90,10 @@ game:GetService("RunService").RenderStepped:Connect(function()
 local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
 if Tool:FindFirstChild("Configuration") then
 for _, v in ipairs(Tool.Configuration:GetChildren()) do
+if v:FindFirstChild("DamageDropoff") then
 if _G.MDDO and v.Name == "DamageDropoff" then
 v.Value = 9e9
+end
 end
 end
 end
@@ -103,8 +107,10 @@ game:GetService("RunService").RenderStepped:Connect(function()
 local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
 if Tool:FindFirstChild("Configuration") then
 for _, v in ipairs(Tool.Configuration:GetChildren()) do
+if v:FindFirstChild("FireRate") then
 if _G.FastShot and v.Name == "FireRate" then
-v.Value = 0.3
+v.Value = v.Value * 0
+end
 end
 end
 end
@@ -118,8 +124,10 @@ game:GetService("RunService").RenderStepped:Connect(function()
 local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
 if Tool:FindFirstChild("Configuration") then
 for _, v in ipairs(Tool.Configuration:GetChildren()) do
+if v:FindFirstChild("isAuto") then
 if _G.AutoForce and v.Name == "isAuto" then
 v.Value = _G.AutoForce 
+end
 end
 end
 end
@@ -133,8 +141,10 @@ game:GetService("RunService").RenderStepped:Connect(function()
 local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
 if Tool:FindFirstChild("Configuration") then
 for _, v in ipairs(Tool.Configuration:GetChildren()) do
+if v:FindFirstChild("DelayedShell") then
 if not _G.RapidShotguns and v.Name == "DelayedShell" then
 v.Value = _G.RapidShotguns
+end
 end
 end
 end
@@ -153,9 +163,9 @@ ImageLabel.Position = UDim2.new(0.898,0,0.1,0)
 ImageLabel.BackgroundColor3 = Color3.fromRGB(0,0,0)
 ImageLabel.BackgroundTransparency = 1
 ImageLabel.Size = UDim2.new(0.1, 0, 0.1, 0)
-ImageLabel.Text = "🎲 | Roll Gun"
+ImageLabel.Text = "Roll Gun"
 ImageLabel.TextSize = "20"
-ImageLabel.Font = "GothamBlack"
+ImageLabel.Font = "Roboto"
 ImageLabel.TextColor3 = Color3.new(1,1,1)
 local Frame = Instance.new("Frame", ImageLabel)
 Frame.Position = UDim2.new(0,0,0,0)
