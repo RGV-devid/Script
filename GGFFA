@@ -80,7 +80,21 @@ end
 end
 end)
 end})
-
+MainTab:CreateToggle({
+   Name = "Max Damage Drop Off",
+   Callback = function(v)
+_G.MDDO = v
+game:GetService("RunService").RenderStepped:Connect(function()
+local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
+if Tool:FindFirstChild("Configuration") then
+for _, v in ipairs(Tool.Configuration:GetChildren()) do
+if _G.MDDO and v.Name == "DamageDropoff" then
+v.Value = 9e9
+end
+end
+end
+end)
+end})
 MainTab:CreateToggle({
    Name = "Fast Shot",
    Callback = function(v)
@@ -91,9 +105,6 @@ if Tool:FindFirstChild("Configuration") then
 for _, v in ipairs(Tool.Configuration:GetChildren()) do
 if _G.FastShot and v.Name == "FireRate" then
 v.Value = 0.3
-end
-if _G.FastShot and v.Name == "DamageDropoff" then
-v.Value = 9e9
 end
 end
 end
