@@ -70,9 +70,9 @@ MainTab:CreateToggle({
    Callback = function(v)
 _G.FastReload = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
-if game:GetService("Player").LocalPlayer.Character:FindFirstChild("Configuration") then
-for _, v in ipairs(game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
+if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Configuration") then
+for _, v in ipairs(game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
 if _G.FastReload and v.Name == "reloadTime" then
 v.Value = 0
 end
@@ -86,9 +86,9 @@ MainTab:CreateToggle({
    Callback = function(v)
 _G.FastShot = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
-if game:GetService("Player").LocalPlayer.Character:FindFirstChild("Configuration") then
-for _, v in ipairs(game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
+if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Configuration") then
+for _, v in ipairs(game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
 if _G.FastShot and v.Name == "FireRate" then
 v.Value = 0.3
 end
@@ -102,9 +102,9 @@ MainTab:CreateToggle({
    Callback = function(v)
 _G.FastShot = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
-if game:GetService("Player").LocalPlayer.Character:FindFirstChild("Configuration") then
-for _, v in ipairs(game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
+if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Configuration") then
+for _, v in ipairs(game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
 if _G.FastShot and v.Name == "FireRate" then
 v.Value = 0.3
 end
@@ -121,9 +121,9 @@ MainTab:CreateToggle({
    Callback = function(v)
 _G.AutoForce = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
-if game:GetService("Player").LocalPlayer.Character:FindFirstChild("Configuration") then
-for _, v in ipairs(game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
+if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Configuration") then
+for _, v in ipairs(game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
 if _G.AutoForce and v.Name == "isAuto" then
 v.Value = _G.AutoForce 
 end
@@ -137,9 +137,9 @@ MainTab:CreateToggle({
    Callback = function(v)
 _G.RapidShotguns = not v
 game:GetService("RunService").RenderStepped:Connect(function()
-if game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
-if game:GetService("Player").LocalPlayer.Character:FindFirstChild("Configuration") then
-for _, v in ipairs(game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
+if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") then
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Configuration") then
+for _, v in ipairs(game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
 if not _G.RapidShotguns and v.Name == "DelayedShell" then
 v.Value = _G.RapidShotguns
 end
