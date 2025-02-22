@@ -107,9 +107,9 @@ if game:GetService("Player").LocalPlayer.Character:FindFirstChild("Configuration
 for _, v in ipairs(game:GetService("Player").LocalPlayer.Character:FindFirstChildWhichIsA("Tool").Configuration:GetChildren()) do
 if _G.FastShot and v.Name == "FireRate" then
 v.Value = 0.3
+end
 if _G.FastShot and v.Name == "DamageDropoff" then
 v.Value = 9e9
-end
 end
 end
 end
@@ -148,8 +148,43 @@ end
 end
 end)
 end})
-
-
+MainTab:CreateSection("GUI")
+MainTab:CreateToggle({
+   Name = "Roll Gun GUI",
+   Callback = function(v)
+if v then
+local ScreenGui = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer.PlayerGui)
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Name = "RollGun"
+local ImageLabel = Instance.new("TextButton", ScreenGui)
+ImageLabel.Position = UDim2.new(0.898,0,0.1,0)
+ImageLabel.BackgroundColor3 = Color3.fromRGB(0,0,0)
+ImageLabel.BackgroundTransparency = 1
+ImageLabel.Size = UDim2.new(0.1, 0, 0.1, 0)
+ImageLabel.Text = "🎲 | Roll Gun"
+ImageLabel.TextSize = "20"
+ImageLabel.Font = "GothamBlack"
+ImageLabel.TextColor3 = Color3.new(1,1,1)
+local Frame = Instance.new("Frame", ImageLabel)
+Frame.Position = UDim2.new(0,0,0,0)
+Frame.BackgroundColor3 = Color3.new(0,0,0)
+Frame.BackgroundTransparency = 0.75
+Frame.Size = UDim2.new(1,0,1,0)
+local UiStroke = Instance.new("UIStroke", Frame)
+UiStroke.Color = Color3.new(0,0,0)
+local UiCorner = Instance.new("UICorner", Frame)
+UiCorner.CornerRadius = UDim.new(0,10)
+ImageLabel.MouseButton1Click:connect(function()
+game:GetService("ReplicatedStorage").Remotes.PlayerReQuests.GetCurrentWep:FireServer()
+end)
+else
+for _,v in pairs(game.Players:GetDescendants()) do
+if v.Name == "RollGun" then
+v:Destroy()
+end
+end
+end
+end})
 
 
 
