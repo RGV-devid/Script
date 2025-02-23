@@ -65,90 +65,55 @@ game:GetService("RunService").RenderStepped:Connect(function()
   end)
 end})
 MainTab:CreateSection("Gun")
-MainTab:CreateToggle({
-   Name = "Fast Reload",
-   Callback = function(v)
-_G.FastReload = v
 game:GetService("RunService").RenderStepped:Connect(function()
-local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
-if Tool:FindFirstChild("Configuration") then
-for _, v in ipairs(Tool.Configuration:GetChildren()) do
-if v:FindFirstChild("reloadTime") then
-if _G.FastReload and v.Name == "reloadTime" then
+if game.Players.LocalPlayer.Character then
+local Tools = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Tool")          
+if Tools and Tools:FindFirstChild("Configuration") then
+for _, v in ipairs(Tools.Configuration:GetChildren()) do
+if v.Name == "FireRate" and _G.FastShot then
+v.Value = v.Value * 0.2
+end
+if v.Name == "reloadTime" and _G.FastReload then
 v.Value = 0
 end
-end
-end
-end
-end)
-end})
-MainTab:CreateToggle({
-   Name = "Max Damage Drop Off",
-   Callback = function(v)
-_G.MDDO = v
-game:GetService("RunService").RenderStepped:Connect(function()
-local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
-if Tool:FindFirstChild("Configuration") then
-for _, v in ipairs(Tool.Configuration:GetChildren()) do
-if v:FindFirstChild("DamageDropoff") then
-if _G.MDDO and v.Name == "DamageDropoff" then
+if v.Name == "DamageDropoff" and _G.MDDO then
 v.Value = 9e9
 end
+if v.Name == "isAuto" and _G.AutoForce then
+v.Value = _G.AutoForce
 end
-end
-end
-end)
-end})
-MainTab:CreateToggle({
-   Name = "Fast Shot",
-   Callback = function(v)
-_G.FastShot = v
-game:GetService("RunService").RenderStepped:Connect(function()
-local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
-if Tool:FindFirstChild("Configuration") then
-for _, v in ipairs(Tool.Configuration:GetChildren()) do
-if v:FindFirstChild("FireRate") then
-if _G.FastShot and v.Name == "FireRate" then
-v.Value = v.Value * 0
-end
-end
-end
-end
-end)
-end})
-MainTab:CreateToggle({
-   Name = "Auto Force",
-   Callback = function(v)
-_G.AutoForce = v
-game:GetService("RunService").RenderStepped:Connect(function()
-local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
-if Tool:FindFirstChild("Configuration") then
-for _, v in ipairs(Tool.Configuration:GetChildren()) do
-if v:FindFirstChild("isAuto") then
-if _G.AutoForce and v.Name == "isAuto" then
-v.Value = _G.AutoForce 
-end
-end
-end
-end
-end)
-end})
-MainTab:CreateToggle({
-   Name = "Rapid Shotguns",
-   Callback = function(v)
-_G.RapidShotguns = not v
-game:GetService("RunService").RenderStepped:Connect(function()
-local Tool = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Tool") 
-if Tool:FindFirstChild("Configuration") then
-for _, v in ipairs(Tool.Configuration:GetChildren()) do
-if v:FindFirstChild("DelayedShell") then
-if not _G.RapidShotguns and v.Name == "DelayedShell" then
+if v.Name == "DelayedShell" and not _G.RapidShotguns then
 v.Value = _G.RapidShotguns
 end
 end
 end
 end
+wait()
 end)
+MainTab:CreateToggle({
+   Name = "Fast Reload",
+   Callback = function(v)
+_G.FastReload = v
+end})
+MainTab:CreateToggle({
+   Name = "Max Damage Drop Off",
+   Callback = function(v)
+_G.MDDO = v
+end})
+MainTab:CreateToggle({
+   Name = "Fast Shot",
+   Callback = function(v)
+_G.FastShot = v
+end})
+MainTab:CreateToggle({
+   Name = "Auto Force",
+   Callback = function(v)
+_G.AutoForce = v
+end})
+MainTab:CreateToggle({
+   Name = "Rapid Shotguns",
+   Callback = function(v)
+_G.RapidShotguns = not v
 end})
 MainTab:CreateSection("GUI")
 MainTab:CreateToggle({
