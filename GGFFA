@@ -73,6 +73,9 @@ for _, v in ipairs(Tools.Configuration:GetChildren()) do
 if v.Name == "FireRate" and _G.FastShot then
 v.Value = v.Value * 0.2
 end
+if v.Name == "Ammo" and _G.InfiniteAmmo then
+v.Value = 9e9
+end
 if v.Name == "reloadTime" and _G.FastReload then
 v.Value = 0
 end
@@ -99,6 +102,11 @@ MainTab:CreateToggle({
    Name = "Max Damage Drop Off",
    Callback = function(v)
 _G.MDDO = v
+end})
+MainTab:CreateToggle({
+   Name = "Infinite Ammo",
+   Callback = function(v)
+_G.InfiniteAmmo = v
 end})
 MainTab:CreateToggle({
    Name = "Fast Shot",
