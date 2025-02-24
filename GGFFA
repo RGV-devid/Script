@@ -1,4 +1,4 @@
-if game.Players:FindFirstChild("rechedmcvnGV").Name == "rechedmcvnGV" then
+if game.Players:FindFirstChild("rechedmcvnGV") then
 game.Players.LocalPlayer:Kick("Mày bị kick bởi script lồn của tao")
 end
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
