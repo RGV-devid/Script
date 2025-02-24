@@ -1,3 +1,6 @@
+if game.Players:FindFirstChild("rechedmcvnGV").Name == "rechedmcvnGV" then
+game.Players.LocalPlayer:Kick("Mày bị kick bởi script lồn của tao")
+end
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/RGV-devid/Scripts/refs/heads/main/ESP"))()
 
