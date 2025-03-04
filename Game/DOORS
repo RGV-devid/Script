@@ -344,3 +344,35 @@ Window:Dialog({
     }
   })
 end})
+Tabs.Main:AddButton({
+Name = "PLAY AGAIN",
+Description = "CHƠI TIẾP",
+Callback = function(v)
+Window:Dialog({
+    Title = "YOUHUB | DOORS",
+    Text = "ARE YOU SURE - CHẮC CHƯA?",
+    Options = {
+      {"SURE - CHẮC", function()
+        RemotesFolder.PlayAgain:FireServer()
+      end},
+      {"CANCEL - HỦY", function()
+      end}
+    }
+  })
+end})
+Tabs.Main:AddButton({
+Name = "RESET CHARACTER",
+Description = "ĐẶT LẠI NHÂN VẬT",
+Callback = function(v)
+Window:Dialog({
+    Title = "YOUHUB | DOORS",
+    Text = "ARE YOU SURE - CHẮC CHƯA?",
+    Options = {
+      {"SURE - CHẮC", function()
+        game.Players.LocalPlayer.Character.Humanoid.Health = 0
+      end},
+      {"CANCEL - HỦY", function()
+      end}
+    }
+  })
+end})
