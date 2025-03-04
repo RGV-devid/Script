@@ -4,13 +4,13 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameData = ReplicatedStorage:WaitForChild("GameData")
 local Floor = GameData:WaitForChild("Floor")
 local The = {
-Fools = Floor.Value == "Fools"
-Hotel = Floor.Value == "Hotel"
-Rooms = Floor.Value == "Rooms"
-Mines = Floor.Value == "Mines"
-Retro = Floor.Value == "Retro"
-Rooms = Floor.Value == "Rooms"
-Backdoor = Floor.Value == "Backdoor"
+Fools = Floor.Value == "Fools",
+Hotel = Floor.Value == "Hotel",
+Rooms = Floor.Value == "Rooms",
+Mines = Floor.Value == "Mines",
+Retro = Floor.Value == "Retro",
+Rooms = Floor.Value == "Rooms",
+Backdoor = Floor.Value == "Backdoor",
 Hotelold = game.PlaceId == 110258689672367
 }
 if (The.Fools or The.Hotelold) then
@@ -120,16 +120,29 @@ Tabs.Main:AddToggle({
 Name = "INSTANCE HOLD INTERACT",
 Description = "TƯƠNG TÁC GIỮ LIỀN",
 Callback = function(v)
-_G.Fast_Doors = v
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.HoldDuration = 0
+end
+end
+InstanceInteract = workspace.DescendantAdded:Connect(function(v)
+if v:IsA("ProximityPrompt") then
+v.HoldDuration = 0
+end
+end)
+else
+InstanceInteract:Disconnect()
+end
 end})
 Tabs.Main:AddSection({"AUTOMATIC - TỰ ĐỘNG"})
 Tabs.Main:AddToggle({
 Name = "AUTOMATIC BREAKER",
 Description = "TỰ ĐỘNG GIẢI ĐIỆN",
 Callback = function(v)
-_G.AutoBreaker = v
-while _G.AutoBreaker do
-if _G.AutoBreaker then
+_G.Automatic_Breaker = v
+while _G.Automatic_Breaker do
+if _G.Automatic_Breaker then
 RemotesFolder.EBF:FireServer()
 end
 wait(1)
@@ -181,7 +194,7 @@ for two=0,t[2]==-1 and 9 or 0 do
 for three=0,t[3]==-1 and 9 or 0 do
 for four=0,t[4]==-1 and 9 or 0 do
 for five=0,t[5]==-1 and 9 or 0 do
-if Floor.Value == "Fools" then
+if The.Fools then
 for six=0,t[6]==-1 and 9 or 0 do
 for seven=0,t[7]==-1 and 9 or 0 do
 for eight=0,t[8]==-1 and 9 or 0 do
@@ -202,13 +215,83 @@ end
 end
 end
 end})
-
-
-
-
-
-
-
-
-
-
+Tabs.Main:AddSection({"WORLD - THẾ GIỚI"})
+game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+if _G.Hiding_Place_Exit_Bug_Fixed and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
+RemotesFolder.CamLock:FireServer()
+end 
+end)
+Tabs.Main:AddToggle({
+Name = "HIDING PLACE EXIT BUG FIXED",
+Description = "ĐÃ SỬA LỖI THOÁT RA KHỎI CHỖ TRỐN",
+Callback = function(v)
+_G.Hiding_Place_Exit_Bug_Fixed = v
+end})
+if The.Retro then
+Tabs.Main:AddToggle({
+Name = "BLUR FAKE BRIDGE",
+Description = "LÀM MỜ CẦU GIẢ",
+Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0.9
+end
+end
+BlurFakeBridge = workspace.DescendantAdded:Connect(function(v)
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0.75
+end
+end)
+else
+BlurFakeBridge:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0
+end
+end
+end
+end})
+Tabs.Main:AddToggle({
+Name = "NO LIVE SANITY ",
+Description = "KHÔNG HIỆU ỨNG TỈNH TÁO BẤT NGỜ",
+Callback = function(v)
+_G.No_Live_Sanity = v
+while _G.NoLiveSanity do
+for _,v in workspace.CurrentCamera:GetChildren() do
+if v.Name == "LiveSanity" then
+v.Enabled = not _G.No_Live_Sanity
+end
+end
+wait(0.1)
+end
+end})
+Tabs.Main:AddToggle({
+Name = "NO VOID ROBLOX",
+Description = "KHÔNG HƯ VÔ NGƯỜI TẠO",
+Callback = function(v)
+if v then
+workspace.FallenPartsDestroyHeight = 0 / 0
+else
+workspace.FallenPartsDestroyHeight = -50000
+end
+end})
+if ReplicatedStorage:FindFirstChild("LiveModifiers"):FindFirstChild("Jammin") then
+Tabs.Main:AddToggle({
+Name = "HIDING JAMMIN'",
+Description = "XOÁ NHẠC JEFF SHOP",
+Callback = function(v)
+_G.Hiding_Jam = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.Hiding_Jam then
+if ReplicatedStorage:FindFirstChild("LiveModifiers"):FindFirstChild("Jammin") then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Jam.Playing = false
+end
+else
+if ReplicatedStorage:FindFirstChild("LiveModifiers"):FindFirstChild("Jammin") then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Jam.Playing = true
+end
+end
+end)
+end})
+end
