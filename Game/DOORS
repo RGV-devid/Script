@@ -295,3 +295,52 @@ end
 end)
 end})
 end
+Tabs.Main:AddSection({"MISCELLANEOUS - LẶT VẶT"})
+Tabs.Main:AddButton({
+Name = "RETURN TO LOBBY",
+Description = "TRỞ VỀ SẢNH",
+Callback = function(v)
+Window:Dialog({
+    Title = "YOUHUB | DOORS",
+    Text = "ARE YOU SURE - CHẮC CHƯA?",
+    Options = {
+      {"SURE - CHẮC", function()
+        RemotesFolder.Lobby:FireServer()
+      end},
+      {"CANCEL - HỦY", function()
+      end}
+    }
+  })
+end})
+Tabs.Main:AddButton({
+Name = "LEAVE GAME",
+Description = "THOÁT TRÒ CHƠI",
+Callback = function(v)
+Window:Dialog({
+    Title = "YOUHUB | DOORS",
+    Text = "ARE YOU SURE - CHẮC CHƯA?",
+    Options = {
+      {"SURE - CHẮC", function()
+        game:Shutdown()
+      end},
+      {"CANCEL - HỦY", function()
+      end}
+    }
+  })
+end})
+Tabs.Main:AddButton({
+Name = "REVIVE",
+Description = "HỒI SINH",
+Callback = function(v)
+Window:Dialog({
+    Title = "YOUHUB | DOORS",
+    Text = "ARE YOU SURE - CHẮC CHƯA?",
+    Options = {
+      {"SURE - CHẮC", function()
+        RemotesFolder.Revive:FireServer()
+      end},
+      {"CANCEL - HỦY", function()
+      end}
+    }
+  })
+end})
