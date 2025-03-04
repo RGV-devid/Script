@@ -1,178 +1,85 @@
+--// Service \\
+local Main_Game = require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameData = ReplicatedStorage:WaitForChild("GameData")
-local Players = game:GetService("Players")
 local Floor = GameData:WaitForChild("Floor")
-local Fools = Floor.Value == "Fools"
-local Hotel = Floor.Value == "Hotel"
-local Rooms = Floor.Value == "Rooms"
-local Mines = Floor.Value == "Mines"
-local Retro = Floor.Value == "Retro"
-local Rooms = Floor.Value == "Rooms"
-local Backdoor = Floor.Value == "Backdoor"
-if Fools then
-RemotesFolder = ReplicatedStorage.EntityInfo
+local The = {
+Fools = Floor.Value == "Fools"
+Hotel = Floor.Value == "Hotel"
+Rooms = Floor.Value == "Rooms"
+Mines = Floor.Value == "Mines"
+Retro = Floor.Value == "Retro"
+Rooms = Floor.Value == "Rooms"
+Backdoor = Floor.Value == "Backdoor"
+Hotelold = game.PlaceId == 110258689672367
+}
+if (The.Fools or The.Hotelold) then
+RemotesFolder = ReplicatedStorage.Bricks
 else
 RemotesFolder = ReplicatedStorage.RemotesFolder
 end
-local Library = loadstring(game:HttpGet("https://github.com/RGV-devid/Script/blob/main/Library/MacLib.lua?raw=true"))()
+--// Library \\
+local Library = loadstring(game:HttpGet("https://github.com/realredz/RedzLibV5/blob/main/Source.lua?raw=true"))()
+Library.Themes.Darker["Color Hub 1"] = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB()),ColorSequenceKeypoint.new(0.50, Color3.fromRGB(35)),ColorSequenceKeypoint.new(1.00, Color3.fromRGB())})
+Library.Themes.Darker["Color Hub 2"] = Color3.fromRGB(40,5,5)
+Library.Themes.Darker["Color Stroke"] = Color3.fromRGB(50,25,25)
+Library.Themes.Darker["Color Theme"] = Color3.fromRGB(255)
+Library.Themes.Darker["Color Text"] = Color3.fromRGB(255,255,255)
+Library.Themes.Darker["Color Dark Text"] = Color3.fromRGB(200)
 
-local Window = Library:Window({
-	Title = "YOUHUB | DOORS",
-	Subtitle = "BETA v0.0.2 ",
-	Size = UDim2.fromOffset(860, 650),
-	DragStyle = 1,
-	DisabledWindowControls = {},
-	ShowUserInfo = true,
-	Keybind = Enum.KeyCode.RightControl,
-	AcrylicBlur = true,
+local Window = Library:MakeWindow({"YOUHUB | DOORS", "v0.0.1", "testando-redzLibv5.json"})
+
+local Button = Window:AddMinimizeButton({
+Button = { ImageColor3 = Color3.fromRGB(255,100,100), Image = "rbxassetid://95869322194132", BackgroundColor3 = Color3.fromRGB(0,0,0), BackgroundTransparency = 0 },
+Corner = { CornerRadius = UDim.new(0, 9e9) },
 })
 
-local UISettings = {
-UIBlurToggle = Window:GlobalSetting({
-		Name = "UI Blur",
-		Default = Window:GetAcrylicBlurState(),
-		Callback = function(v)
-		Window:SetAcrylicBlurState(v)
-		Window:Notify({
-				Title = Window.Settings.Title,
-				Description = (v and "Enabled" or "Disabled") .. " UI Blur",
-				Lifetime = 5
-		})
- end,
-}),
-ShowUserInfo = Window:GlobalSetting({
-		Name = "Show User Info",
-		Default = Window:GetUserInfoState(),
-		Callback = function(v)
-		Window:SetUserInfoState(v)
-		Window:Notify({
-				Title = Window.Settings.Title,
-				Description = (v and "Showing" or "Redacted") .. " User Info",
-				Lifetime = 5
-			})
-		end,
-	})
-}
-
-local Groups = {
-	Group = Window:TabGroup()
-}
-
 local Tabs = {
-     Main = Groups.Group:Tab({ Name = "Main", Image = "rbxassetid://18821914323" }),
-     Players = Groups.Group:Tab({ Name = "Players", Image = "rbxassetid://10747373176" }),
-     Entities = Groups.Group:Tab({ Name = "Entities", Image = "rbxassetid://10734951847" }),
-     Visual = Groups.Group:Tab({ Name = "Visual", Image = "rbxassetid://10723396107" }),
-     ESP = Groups.Group:Tab({ Name = "ESP", Image = "rbxassetid://10734954538" }),
-     Settings = Groups.Group:Tab({ Name = "Settings", Image = "rbxassetid://10734950309" }),
+Main = Window:MakeTab({"Main", "Home"}),
+Players = Window:MakeTab({"Players", "Home"}),
+Exploit = Window:MakeTab({"Exploit", "Home"}),
+Visual = Window:MakeTab({"Visual", "Home"})
 }
 
-local Section = {
-	Death = Tabs.Main:Section({ Side = "Left" }),
-        Fast = Tabs.Main:Section({ Side = "Right" }),
-        Reach = Tabs.Main:Section({ Side = "Left" }),
-        Interact = Tabs.Main:Section({ Side = "Right" }),
-        Automation = Tabs.Main:Section({ Side = "Left" }),
-        World = Tabs.Main:Section({ Side = "Right" }),
-        Misc = Tabs.Main:Section({ Side = "Left" }),
-        Alert = Tabs.Main:Section({ Side = "Right" }),
-
-        Players = Tabs.Players:Section({ Side = "Left" }),
-        LocalPlayer = Tabs.Players:Section({ Side = "Right" }),
-        Body = Tabs.Players:Section({ Side = "Left" }),
-
-        Anti = Tabs.Entities:Section({ Side = "Left" }),
-        Bypass = Tabs.Entities:Section({ Side = "Right" }),
-        Trolling = Tabs.Entities:Section({ Side = "Right" }),
-}
-local Header = {
-Death = Section.Death:Header({Name = "Death"}),
-Fast = Section.Fast:Header({Name = "Fast"}),
-Reach = Section.Reach:Header({Name = "Reach"}),
-Interact = Section.Interact:Header({Name = "Interact"}),
-Automation = Section.Automation:Header({Name = "Automation"}),
-World = Section.World:Header({Name = "World"}),
-Misc = Section.Misc:Header({Name = "Misc"}),
-Alert = Section.Alert:Header({Name = "Alert"}),
-
-Players = Section.Players:Header({Name = "Players"}),
-LocalPlayer = Section.LocalPlayer:Header({Name = "LocalPlayer"}),
-Body = Section.Body:Header({Name = "Body"}),
-
-Anti = Section.Anti:Header({Name = "Anti"}),
-Bypass = Section.Bypass:Header({Name = "Bypass"}),
-Trolling = Section.Trolling:Header({Name = "Trolling"}),
-}
-
-Section.Death:Dropdown({
-	Name = "Select on Death",
-	Multi = false,
-	Required = true,
-	Options = {"Leave","Lobby","Revive"},
-	Default = 1,
-	Callback = function(v)
-_G.SelectOnDeath = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.EnabledOnDeath then
-if game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectOnDeath == "Lobby" then
-RemotesFolder.Lobby:FireServer()
-elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectOnDeath == "Leave" then
-game:Shutdown()
-elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectOnDeath == "Revive [FREE]" then
-RemotesFolder.Revive:FireServer()
-end
-end
-end)
-end})
-Section.Death:Toggle({
-	Name = "Enabled on Death",
-	Default = false,
-	Callback = function(v)
-_G.EnabledOnDeath = v
-end})
-
-
+Tabs.Main:AddSection({"FAST - NHANH CHÓNG"})
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()
-if _G.FastDoors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door"):SetAttribute("FastOpen", true)
+if _G.Fast_Doors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door"):SetAttribute("FastOpen", true)
 end 
 end)
 end)
-Section.Fast:Toggle({
-	Name = "Fast Doors",
-	Default = false,
-	Callback = function(v)
-_G.FastDoors = v
+Tabs.Main:AddToggle({
+Name = "FAST DOORS",
+Description = "MỞ CỬA NHANH",
+Callback = function(v)
+_G.Fast_Doors = v
 end})
-
-
+Tabs.Main:AddSection({"FAR - TẦM XA"})
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()
-if _G.DoorsReach then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
+if _G.Reach_Doors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
 end 
 end)
 end)
-Section.Reach:Toggle({
-	Name = "Doors Reach",
-	Default = false,
-	Callback = function(v)
-_G.DoorsReach = v
+Tabs.Main:AddToggle({
+Name = "FAR DOORS",
+Description = "MỞ CỬA XA",
+Callback = function(v)
+_G.Reach_Doors = v
 end})
-Section.Reach:Toggle({
-	Name = "Reach",
-	Default = false,
-	Callback = function(v)
+Tabs.Main:AddToggle({
+Name = "FAST PRESS",
+Description = "NHẤN XA",
+Callback = function(v)
 if v then
 for _,v in pairs(workspace:GetDescendants()) do
 if v:IsA("ProximityPrompt") then
 v.MaxActivationDistance = 15
 end
 end
-IncreasedDistance = workspace.CurrentRooms.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
+IncreasedDistance = workspace.DescendantAdded:Connect(function(v)
 if v:IsA("ProximityPrompt") then
 v.MaxActivationDistance = 15
-end
 end
 end)
 else
@@ -184,22 +91,20 @@ end
 end
 end
 end})
-
-Section.Interact:Toggle({
-	Name = "Through Interact",
-	Default = false,
-	Callback = function(v)
+Tabs.Main:AddSection({"INTERACT - TƯƠNG TÁC"})
+Tabs.Main:AddToggle({
+Name = "THROUGH INTERACT",
+Description = "TƯƠNG TÁC XUYÊN",
+Callback = function(v)
 if v then
 for _,v in pairs(workspace:GetDescendants()) do
 if v:IsA("ProximityPrompt") then
 v.RequiresLineOfSight = false
 end
 end
-ThroughInteract = workspace.CurrentRooms.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
+ThroughInteract = workspace.DescendantAdded:Connect(function(v)
 if v:IsA("ProximityPrompt") then
 v.RequiresLineOfSight = false
-end
 end
 end)
 else
@@ -211,1278 +116,99 @@ end
 end
 end
 end})
-Section.Interact:Toggle({
-	Name = "Instance Interact",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.HoldDuration = 0
-end
-end
-InstanceInteract = workspace.CurrentRooms.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.HoldDuration = 0
-end
-end
-end)
-else
-InstanceInteract:Disconnect()
-end
+Tabs.Main:AddToggle({
+Name = "INSTANCE HOLD INTERACT",
+Description = "TƯƠNG TÁC GIỮ LIỀN",
+Callback = function(v)
+_G.Fast_Doors = v
 end})
-
-
-Section.Automation:Toggle({
-	Name = "Auto Breaker",
-	Default = false,
-	Callback = function(v)
+Tabs.Main:AddSection({"AUTOMATIC - TỰ ĐỘNG"})
+Tabs.Main:AddToggle({
+Name = "AUTOMATIC BREAKER",
+Description = "TỰ ĐỘNG GIẢI ĐIỆN",
+Callback = function(v)
 _G.AutoBreaker = v
-while _G.AutoBreaker do wait(1)
+while _G.AutoBreaker do
 if _G.AutoBreaker then
 RemotesFolder.EBF:FireServer()
 end
+wait(1)
 end
 end})
-Section.Automation:Toggle({
-	Name = "Auto Padlock Unlock",
-	Default = false,
-	Callback = function(v)
-_G.AutoPadlockUnlock = v
-while _G.AutoPadlockUnlock do wait(0.5)
-        for _, player in pairs(game.Players:GetPlayers()) do
-            if not player.Character then continue end
-            local tool = player.Character:FindFirstChildOfClass("Tool")
-
-            if tool and tool.Name:match("LibraryHintPaper") then
-                local code = tool:FindFirstChild("Code") and tool.Code.Value or nil
-                local padlock = workspace:FindFirstChild("Padlock", true)
-
-                if tonumber(code) and (padlock.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= _G.PadlockUnlockDistance or 50 then
-                    firetouchinterest(padlock, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
-                    firetouchinterest(padlock, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
-                end
-            end
-        end
-    end
-end})
-Section.Automation:Divider()
-Section.Automation:Dropdown({
-	Name = "Unlock Distance",
-	Multi = false,
-	Required = true,
-	Options = {"50","100","150","200"},
-	Default = 1,
-	Callback = function(v)
-_G.PadlockUnlockDistance = v
-end})
-
-
-game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
-if _G.ClosetsExitFix and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
-RemotesFolder.CamLock:FireServer()
-end 
-end)
-Section.World:Toggle({
-	Name = "Closets Exit Fix",
-	Default = false,
-	Callback = function(v)
-_G.ClosetsExitFix = v
-end})
-if Retro then
-Section.World:Toggle({
-	Name = "Hiding Fake Bridge",
-	Default = false,
-	Callback = function(v)
-_G.BlurFakeBridge = v
-if _G.BlurFakeBridge then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == true then
-v.Transparency = 0.9
+Tabs.Main:AddButton({
+Name = "PADLOCK UNLOCK - NEED ALL BOOKS",
+Description = "MỞ CỬA THƯ VIỆN - CẦN LẤY TẤT CẢ SÁCH",
+Callback = function(v)
+local Paper = workspace:FindFirstChild("LibraryHintPaper",true) or workspace:FindFirstChild("LibraryHintPaperHard",true) or Players:FindFirstChild("LibraryHintPaper",true) or Players:FindFirstChild("LibraryHintPaperHard",true)
+if not Paper then
+warn("YOU NEED PAPER - CẦN GIẤY")
+return
 end
-end
-BlurFakeBridge = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == true then
-v.Transparency = 0.75
-end
-end
-end)
-else
-BlurFakeBridge:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == true then
-v.Transparency = 0
-end
-end
-end
-end})
-end
-if Backdoor then
-Section.World:Toggle({
-	Name = "Hiding Live Sanity",
-	Default = false,
-	Callback = function(v)
-_G.NoLiveSanity = v
-while _G.NoLiveSanity do wait(1)
-for _,v in workspace.CurrentCamera:GetChildren() do
-if v.Name == "LiveSanity" and workspace:FindFirstChild("EntityModel") then
-v.Enabled = not _G.NoLiveSanity
-end
-end
-end
-end})
-end
-Section.World:Toggle({
-	Name = "No Void Roblox",
-	Default = false,
-	Callback = function(v)
-if v then
-workspace.FallenPartsDestroyHeight = 0 / 0
-else
-workspace.FallenPartsDestroyHeight = -50000
-end
-end})
-
-
-Section.Misc:Button({
-	Name = "Lobby",
-	Callback = function()
-	Window:Dialog({
-	Title = Window.Settings.Title,
-	Description = "You want return to Lobby?",
-	Buttons = {
-		{Name = "Confirm",
-		Callback = function()
-		RemotesFolder.Lobby:FireServer()
-		end},
-		{Name = "Cancel"}}})
-end})
-Section.Misc:Button({
-	Name = "Revive",
-	Callback = function()
-	Window:Dialog({
-	Title = Window.Settings.Title,
-	Description = "You want Revive?",
-	Buttons = {
-		{Name = "Confirm",
-		Callback = function()
-		RemotesFolder.Revive:FireServer()
-		end},
-		{Name = "Cancel"}}})
-end})
-Section.Misc:Button({
-	Name = "Play Again",
-	Callback = function()
-	Window:Dialog({
-	Title = Window.Settings.Title,
-	Description = "You want Play Again?",
-	Buttons = {
-		{Name = "Confirm",
-		Callback = function()
-		RemotesFolder.PlayAgain:FireServer()
-		end},
-		{Name = "Cancel"}}})
-end})
-Section.Misc:Button({
-	Name = "Leave",
-	Callback = function()
-	Window:Dialog({
-	Title = Window.Settings.Title,
-	Description = "You want exit game?",
-	Buttons = {
-		{Name = "Confirm",
-		Callback = function()
-		game:Shutdown()
-		end},
-		{Name = "Cancel"}}})
-end})
-Section.Misc:Button({
-	Name = "Reset Character",
-	Callback = function()
-	Window:Dialog({
-	Title = Window.Settings.Title,
-	Description = "You want die?",
-	Buttons = {
-		{Name = "Confirm",
-		Callback = function()
-		Players.LocalPlayer.Character.Humanoid.Health = 0
-		end},
-		{Name = "Cancel"}}})
-end})
-
-
-_G.PlaySoundAlert = 5
-Section.Alert:Toggle({
-	Name = "Alert Entity",
-	Default = false,
-	Callback = function(v)
-if v then
-local Entity = {"SeekMovingNewClone","SeekMoving","GlitchAmbush","GlitchRush","BackdoorLookman","BackdoorRush","GloombatSwarm","Eyes","JeffTheKiller","RushMoving","AmbushMoving","A60","A120"}
-NotificationEntity = workspace.ChildAdded:Connect(function(v)
-if table.find(Entity,v.Name) then
-repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
-if v:IsDescendantOf(workspace) then
-if v.Name == "RushMoving" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'Rush' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Rush!")
-end
-elseif v.Name == "AmbushMoving" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'Ambush' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Ambush!")
-end
-elseif v.Name == "BackdoorRush" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'Blitz' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Blitz!")
-end
-elseif v.Name == "A60" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'A60' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] A60!")
-end
-elseif v.Name == "A120" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'A120' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] A120!")
-end
-elseif v.Name == "GlitchAmbush" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'AR0xMBUSH' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-elseif v.Name == "GlitchRush" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'RNIUSHCg==' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-elseif v.Name == "GloombatSwarm" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'GloombatSwarm' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Gloombat Swarm!")
-end
-elseif v.Name == "Eyes" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'Eyes' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Eyes!")
-end
-elseif v.Name == "BackdoorLookman" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'Lookman' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Lookman!")
-end
-elseif v.Name == "JeffTheKiller" then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'Jeff The Killer' has spawn!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] JeffTheKiller!")
-end
-elseif (v.Name == "SeekMoving" or v.Name == "SeekMovingNewClone") then
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Entity 'Seek' has spawn, goodluck for run!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-if _G.PlayChatAlert then
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("[Alert] Seek Chase Goodluck!")
+local HintsNeeded = The.Fools and 8 or 3
+local Hints = 0
+for _,Collected in pairs(game.Players.LocalPlayer.PlayerGui.PermUI.Hints:GetChildren()) do
+if Collected.Name == "Icon" then
+if Collected:IsA("ImageLabel") then
+for _,Icon in pairs(Paper.UI:GetChildren()) do
+if tonumber(Icon.Name) then
+if Icon.ImageRectOffset == Collected.ImageRectOffset then
+Hints += 1
 end
 end
 end
 end
-end)
-else
-NotificationEntity:Disconnect()
-end
-end})
-Section.Alert:Toggle({
-	Name = "Playing Chat",
-	Default = false,
-	Callback = function(v)
-_G.PlayChatAlert = v
-end})
-Section.Alert:Toggle({
-	Name = "Playing Sound",
-	Default = false,
-	Callback = function(v)
-_G.SoundAlert = v
-end})
-Section.Alert:Dropdown({
-	Name = "Volume Sound",
-	Multi = false,
-	Required = true,
-	Options = {"2.5","5","7.5","10"},
-	Default = 2,
-	Callback = function(v)
-_G.PlaySoundAlert = v
-end})
-Section.Alert:Button({
-	Name = "Playing Test",
-	Callback = function()
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Alert!",
-Lifetime = 3
-})
-if _G.SoundAlert then
-local Sound = Instance.new("Sound")
-Sound.Parent = game.SoundService
-Sound.SoundId = "rbxassetid://4590657391"
-Sound.Volume = _G.PlaySoundAlert
-Sound.PlayOnRemove = true
-Sound:Destroy()
-end
-end})
-
-
-Section.Players:Dropdown({
-	Name = "Walkspeed",
-	Multi = false,
-	Required = true,
-        Search = true,
-	Options = {"20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"},
-	Default = 1,
-	Callback = function(v)
-_G.WalkSpeed = v
-end})
-Section.Players:Toggle({
-	Name = "Enabled Walkspeed",
-	Default = false,
-	Callback = function(v)
-_G.EnabledSpeed = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.EnabledSpeed and not _G.SeekSpeed then
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.WalkSpeed or 17
-game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 1)
-else
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 17
-game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 0)
-end
-end)
-end})
-Section.Players:Dropdown({
-	Name = "Fly Speed",
-	Multi = false,
-	Required = true,
-        Search = true,
-	Options = {"15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"},
-	Default = 1,
-	Callback = function(v)
-_G.SetSpeedFly = v
-end})
-_G.SetSpeedFly = 15
-Section.Players:Toggle({
-	Name = "Enabled Fly",
-	Default = false,
-	Callback = function(v)
-_G.StartFly = v
-if _G.StartFly == false then
-if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler:Destroy()
-game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler:Destroy()
-game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
 end
 end
-while _G.StartFly do
-if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
-game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
-game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
-game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.CFrame = Workspace.CurrentCamera.CoordinateFrame
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = Vector3.new()
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X > 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
+if Hints < HintsNeeded then
+warn("YOU NEED BOOKS - CẦN SÁCH")
+return
 end
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X < 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
-end
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z > 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
-end
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z < 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
-end
-elseif game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") == nil and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") == nil then
-local bv = Instance.new("BodyVelocity")
-local bg = Instance.new("BodyGyro")
-
-bv.Name = "VelocityHandler"
-bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-bv.MaxForce = Vector3.new(0,0,0)
-bv.Velocity = Vector3.new(0,0,0)
-
-bg.Name = "GyroHandler"
-bg.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-bg.MaxTorque = Vector3.new(0,0,0)
-bg.P = 1000
-bg.D = 50
-end
-task.wait()
-end
-end})
-
-Section.Players:Divider()
-local ClonedCollision = game:GetService("Players").LocalPlayer.Character.Collision:Clone()
-ClonedCollision.Name = "_CollisionClone"
-ClonedCollision.Massless = true
-ClonedCollision.Parent = game:GetService("Players").LocalPlayer.Character
-ClonedCollision.CanCollide = false
-ClonedCollision.CanQuery = false
-ClonedCollision.CustomPhysicalProperties = PhysicalProperties.new(0.01, 0.7, 0, 1, 1)
-if ClonedCollision:FindFirstChild("CollisionCrouch") then
-ClonedCollision.CollisionCrouch:Destroy()
-end
-task.spawn(function()
-while task.wait(0.23) do
-if _G.SpeedBypass and not _G.SeekSpeed then
-if ClonedCollision then
-ClonedCollision.Massless = false
-task.wait(0.23)
-if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Anchored then
-ClonedCollision.Massless = true
-task.wait(1)
-end
-ClonedCollision.Massless = true
+local t = {}
+for i = 1, The.Hotel and 5 or 10 do
+local Icon = Paper.UI[i]
+local Number = -1
+for _,Collected in pairs(game.Players.LocalPlayer.PlayerGui.PermUI.Hints:GetChildren()) do
+if Collected.Name == "Icon" then
+if Collected.ImageRectOffset == Icon.ImageRectOffset then
+Number = tonumber(Collected.TextLabel.Text)
 end
 end
 end
-end)
-Section.Players:Toggle({
-	Name = "Speed Bypass",
-	Default = false,
-	Callback = function(v)
-_G.SpeedBypass = v
-end})
-Section.Players:Toggle({
-	Name = "Invalid Speed",
-	Default = false,
-	Callback = function(v)
-_G.SeekSpeed = v
-end})
-
-Section.LocalPlayer:Toggle({
-	Name = "Eat Candies",
-	Default = false,
-	Callback = function(v)
-_G.EatCandy = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
-if not game.Players.LocalPlayer.Character:FindFirstChild("Meshes/DOORS_EvilCandy_Cube", true) then
-game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
+table.insert(t,Number)
+end
+for one=0,t[1]==-1 and 9 or 0 do
+for two=0,t[2]==-1 and 9 or 0 do
+for three=0,t[3]==-1 and 9 or 0 do
+for four=0,t[4]==-1 and 9 or 0 do
+for five=0,t[5]==-1 and 9 or 0 do
+if Floor.Value == "Fools" then
+for six=0,t[6]==-1 and 9 or 0 do
+for seven=0,t[7]==-1 and 9 or 0 do
+for eight=0,t[8]==-1 and 9 or 0 do
+for nine=0,t[9]==-1 and 9 or 0 do
+for ten=0,t[10]==-1 and 9 or 0 do
+RemotesFolder.PL:FireServer((t[1]==-1 and one or t[1])..(t[2]==-1 and two or t[2])..(t[3]==-1 and three or t[3])..(t[4]==-1 and four or t[4])..(t[5]==-1 and five or t[5])..(t[6]==-1 and six or t[6])..(t[7]==-1 and seven or t[7])..(t[8]==-1 and eight or t[8])..(t[9]==-1 and nine or t[9])..(t[10]==-1 and ten or t[10]))
 end
 end
-end)
-end})
-Section.LocalPlayer:Toggle({
-	Name = "No Accessories",
-	Default = false,
-	Callback = function(v)
-_G.NoSlow = v
-game:GetService("RunService").RenderStepped:Connect(function()
-game.Players.LocalPlayer.Character.Head.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.LeftFoot.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.LeftHand.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.LeftLowerArm.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.LeftUpperArm.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.LowerTorso.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.RightHand.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.RightLowerArm.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.RightLowerLeg.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.RightUpperArm.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.RightUpperLeg.Massless = not _G.NoSlow;
-game.Players.LocalPlayer.Character.UpperTorso.Massless = not _G.NoSlow;
-end)
-end})
-Section.LocalPlayer:Toggle({
-	Name = "Noclip",
-	Default = false,
-	Callback = function(v)
-if v then
-        noclipConnection = game:GetService("RunService").Stepped:Connect(function()
-            local player = game.Players.LocalPlayer
-            if player and player.Character then
-                for _, part in pairs(player.Character:GetDescendants()) do
-                    if part:IsA("BasePart") then
-                        part.CanCollide = false
-                    end
-                end
-            end
-        end)
-    else
-        if noclipConnection then
-            noclipConnection:Disconnect()
-            noclipConnection = nil
-        end
-    end
-end})
-if not Fools then
-Section.LocalPlayer:Toggle({
-	Name = "Always jump",
-	Default = false,
-	Callback = function(v)
-_G.Jump = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.Jump then
-game.Players.LocalPlayer.Character:SetAttribute("CanJump", true)
 end
-end)
-end})
-Section.LocalPlayer:Toggle({
-	Name = "Crouch Spoof",
-	Default = false,
-	Callback = function(v)
-_G.CrouchSpoof = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.CrouchSpoof then
-RemotesFolder.Crouch:FireServer(true)
-end
-end)
-end})
-end
-Section.Body:Colorpicker({
-	Name = "Color Body",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(v)
-_G.BodyColor = v
-task.spawn(function()
-while _G.BodyColor do wait(1)
-game.Players.LocalPlayer.Character.Head.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.UpperTorso.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.RightHand.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.RightLowerArm.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.RightLowerLeg.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.RightUpperArm.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.RightUpperLeg.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.LeftLowerLeg.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.LeftUpperArm.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.LeftUpperLeg.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.LowerTorso.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.RightFoot.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.LeftFoot.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.LeftHand.Color = _G.BodyColor or Color3.new(1,1,1)
-game.Players.LocalPlayer.Character.LeftLowerArm.Color = _G.BodyColor or Color3.new(1,1,1)
-end
-end)
-end})
-Section.Body:Toggle({
-	Name = "Chams Body",
-	Default = false,
-	Callback = function(v)
-_G.BlurBody = v
-if _G.BlurBody then
-game.Players.LocalPlayer.Character.Head.Material = "ForceField"
-game.Players.LocalPlayer.Character.UpperTorso.Material = "ForceField"
-game.Players.LocalPlayer.Character.RightHand.Material = "ForceField"
-game.Players.LocalPlayer.Character.RightLowerArm.Material = "ForceField"
-game.Players.LocalPlayer.Character.RightLowerLeg.Material = "ForceField"
-game.Players.LocalPlayer.Character.RightUpperArm.Material = "ForceField"
-game.Players.LocalPlayer.Character.RightUpperLeg.Material = "ForceField"
-game.Players.LocalPlayer.Character.LeftLowerLeg.Material = "ForceField"
-game.Players.LocalPlayer.Character.LeftUpperArm.Material = "ForceField"
-game.Players.LocalPlayer.Character.LeftUpperLeg.Material = "ForceField"
-game.Players.LocalPlayer.Character.LowerTorso.Material = "ForceField"
-game.Players.LocalPlayer.Character.RightFoot.Material = "ForceField"
-game.Players.LocalPlayer.Character.LeftFoot.Material = "ForceField"
-game.Players.LocalPlayer.Character.LeftHand.Material = "ForceField"
-game.Players.LocalPlayer.Character.LeftLowerArm.Material = "ForceField"
-else
-game.Players.LocalPlayer.Character.Head.Material = "Plastic"
-game.Players.LocalPlayer.Character.UpperTorso.Material = "Plastic"
-game.Players.LocalPlayer.Character.RightHand.Material = "Plastic"
-game.Players.LocalPlayer.Character.RightLowerArm.Material = "Plastic"
-game.Players.LocalPlayer.Character.RightLowerLeg.Material = "Plastic"
-game.Players.LocalPlayer.Character.RightUpperArm.Material = "Plastic"
-game.Players.LocalPlayer.Character.RightUpperLeg.Material = "Plastic"
-game.Players.LocalPlayer.Character.LeftLowerLeg.Material = "Plastic"
-game.Players.LocalPlayer.Character.LeftUpperArm.Material = "Plastic"
-game.Players.LocalPlayer.Character.LeftUpperLeg.Material = "Plastic"
-game.Players.LocalPlayer.Character.LowerTorso.Material = "Plastic"
-game.Players.LocalPlayer.Character.RightFoot.Material = "Plastic"
-game.Players.LocalPlayer.Character.LeftFoot.Material = "Plastic"
-game.Players.LocalPlayer.Character.LeftHand.Material = "Plastic"
-game.Players.LocalPlayer.Character.LeftLowerArm.Material = "Plastic"
-end
-end})
-Section.Body:Toggle({
-	Name = "Chams Accessory",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("Accessory") then
-v.Material = "ForceField"
 end
 end
 else
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("Accessory") then
-v.Material = "Plastic"
+RemotesFolder.PL:FireServer((t[1]==-1 and one or t[1])..(t[2]==-1 and two or t[2])..(t[3]==-1 and three or t[3])..(t[4]==-1 and four or t[4])..(t[5]==-1 and five or t[5]))
+end
+end
+end
 end
 end
 end
 end})
 
 
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiSnare then
-if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Snare") then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
-if v.Name == "Snare" then 
-v.Hitbox.CanTouch = not _G.AntiSnare
-end 
-end 
-end 
-end 
-end)
-Section.Anti:Toggle({
-	Name = "Anti-Snare",
-	Default = false,
-	Callback = function(v)
-_G.AntiSnare = v
-end})
-Section.Anti:Toggle({
-	Name = "Anti-Dupe",
-	Default = false,
-	Callback = function(v)
-_G.AntiDupe = v
-if _G.AntiDupe then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "DoorFake" and v:IsA("Model") then
-v.Hidden.CanTouch = not _G.AntiDupe
-if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
-v.LockPart.UnlockPrompt.Enabled = not true
-end
-end
-end
-AntiDupe = workspace.CurrentRooms.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "DoorFake" and v:IsA("Model") then
-v.Hidden.CanTouch = not _G.AntiDupe
-if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
-v.LockPart.UnlockPrompt.Enabled = not true
-end
-end
-end
-end)
-else
-AntiDupe:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "DoorFake" and v:IsA("Model") then
-v.Hidden.CanTouch = not false
-if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
-v.LockPart.UnlockPrompt.Enabled = not false
-end
-end
-end
-end
-end})
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiChandelier then 
-if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("ChandelierObstruction") then 
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
-if v.Name == "ChandelierObstruction" then 
-v.HurtPart.CanTouch = not _G.AntiChandelier
-end 
-end 
-end 
-end 
-end)
-Section.Anti:Toggle({
-	Name = "Anti-Chandelier",
-	Default = false,
-	Callback = function(v)
-_G.AntiChandelier = v
-end})
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiSeekArms then
-if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Seek_Arm") then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
-if v.Name == "Seek_Arm" then 
-v.AnimatorPart.CanTouch = not _G.AntiSeekArms
-end 
-end 
-end 
-end 
-end)
-Section.Anti:Toggle({
-	Name = "Anti-Seek Arms",
-	Default = false,
-	Callback = function(v)
-_G.AntiSeekArms = v
-end})
-game:GetService("RunService").RenderStepped:Connect(function()
-if not (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("Collision")) then return end
-if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
-if not Fools then
-for _, v in workspace:GetChildren() do
-if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
-RemotesFolder.MotorReplication:FireServer(-650)
-break
-end
-end
-end
-end
-if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
-if Fools then
-for _, v in workspace:GetChildren() do
-if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
-RemotesFolder.MotorReplication:FireServer(0,120,0,false)
-break
-end
-end
-end
-end
-if workspace:FindFirstChild("BackdoorLookman") and _G.AntiLookman then
-for _, v in workspace:GetChildren() do
-if v.Name == "BackdoorLookman" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
-RemotesFolder.MotorReplication:FireServer(-650)
-break
-end
-end
-end
-end)
-Section.Anti:Toggle({
-	Name = "Anti-Eyes",
-	Default = false,
-	Callback = function(v)
-_G.AntiEyes = v
-end})
-Section.Anti:Toggle({
-	Name = "Anti-Lookman",
-	Default = false,
-	Callback = function(v)
-_G.AntiLookman = v
-end})
-game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()
-if _G.AntiGiggle then
-for _, room in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetChildren()) do
-if room.Name == "GiggleCeiling" then
-room.Hitbox.CanTouch = not _G.AntiGiggle
-end
-end
-end
-end)
-end)
-if Mines then
-Section.Anti:Toggle({
-	Name = "Anti-Giggle",
-	Default = false,
-	Callback = function(v)
-_G.AntiGiggle = v
-end})
-end
-Section.Anti:Toggle({
-	Name = "Anti-Screech",
-	Default = false,
-	Callback = function(v)
-_G.AntiScreech = v
-if _G.AntiScreech then
-for _,v in pairs(workspace.Camera:GetDescendants()) do
-if v.Name == "Screech" then
-v:Destroy()
-elseif v.Name == "GlitchScreech" then
-v:Destroy()
-elseif v.Name == "RetroScreech" then
-v:Destroy()
-end
-end
-AntiScreech = workspace.CurrentCamera.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace.Camera:GetDescendants()) do
-if v.Name == "Screech" then
-v:Destroy()
-elseif v.Name == "GlitchScreech" then
-v:Destroy()
-elseif v.Name == "RetroScreech" then
-v:Destroy()
-end
-end
-end)
-RemotesFolder.Screech.Name = "_Screech"
-else
-AntiScreech:Disconnect()
-RemotesFolder._Screech.Name = "Screech"
-end
-end})
-Section.Anti:Toggle({
-	Name = "Anti-A90",
-	Default = false,
-	Callback = function(v)
-_G.AntiA90 = v
-if _G.AntiA90 then
-RemotesFolder.A90.Name = "_A90"
-game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = nil
-else
-RemotesFolder._A90.Name = "A90"
-game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare
-end
-end})
-Section.Anti:Toggle({
-	Name = "Anti-Halt",
-	Default = false,
-	Callback = function(v)
-_G.AntiHalt = v
-while _G.AntiHalt do wait(0.1)
-game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade.Parent = game.Workspace
-end
-end})
-if not Fools then
-Section.Anti:Toggle({
-	Name = "Anti-Dread",
-	Default = false,
-	Callback = function(v)
-_G.AntiDread = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiDread then
-RemotesFolder.Dread:FireServer(false)
-else
-RemotesFolder.Dread:FireServer(true)
-end
-end)
-end})
-end
-if Retro then
-Section.Anti:Toggle({
-	Name = "Anti-Lava Part",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Lava" then
-v.CanTouch = false
-end
-end
-AntiLava = workspace.CurrentRooms.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Lava" then
-v.CanTouch = false
-end
-end
-end)
-else
-AntiLava:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Lava" then
-v.CanTouch = true
-end
-end
-end
-end})
-Section.Anti:Toggle({
-	Name = "Anti-Wall",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "TheWall" then
-v.CanTouch = false
-end
-end
-AntiWall = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "TheWall" then
-v.CanTouch = false
-end
-end
-end)
-else
-AntiWall:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "TheWall" then
-v.CanTouch = true
-end
-end
-end
-end})
-Section.Anti:Toggle({
-	Name = "Anti-Drakobloxxers",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Drakobloxxer" then
-v:Destroy()
-end
-end
-AntiDrakobloxxer = workspace.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Drakobloxxer" then
-v:Destroy()
-end
-end
-end)
-else
-AntiDrakobloxxer:Disconnect()
-end
-end})
-end
-if Fools then
-Section.Anti:Toggle({
-	Name = "Anti-Banana",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "BananaPeel" then
-v.CanTouch = false
-v.Transparency = 0.75
-end
-end
-AntiBanana = workspace.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "BananaPeel" then
-v.CanTouch = false
-v.Transparency = 0.75
-end
-end
-end)
-else
-AntiBanana:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "BananaPeel" then
-v.CanTouch = true
-v.Transparency = 0
-end
-end
-end
-end})
-Section.Anti:Toggle({
-	Name = "Anti-Jeff",
-	Default = false,
-	Callback = function(v)
-if v then
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v.Knife.CanTouch = false 
-v.Knife.CanCollide = false
-v:Destroy()
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v.Head.CanTouch = false 
-v.Head.CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v.HumanoidRootPart.CanTouch = false 
-v.HumanoidRootPart.CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Left Arm"].CanTouch = false 
-v["Left Arm"].CanCollide = false
-end 
-end
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Left Leg"].CanTouch = false 
-v["Left Leg"].CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Right Arm"].CanTouch = false 
-v["Right Arm"].CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Right Leg"].CanTouch = false 
-v["Right Leg"].CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do
-if v.Name == "JeffTheKiller" then 
-v.Torso.CanTouch = false 
-v.Torso.CanCollide = false
-end 
-end 
-AntiJeff = workspace.ChildAdded:Connect(function(child)
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v.Knife.CanTouch = false 
-v.Knife.CanCollide = false
-v:Destroy()
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v.Head.CanTouch = false 
-v.Head.CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v.HumanoidRootPart.CanTouch = false 
-v.HumanoidRootPart.CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Left Arm"].CanTouch = false 
-v["Left Arm"].CanCollide = false
-end 
-end
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Left Leg"].CanTouch = false 
-v["Left Leg"].CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Right Arm"].CanTouch = false 
-v["Right Arm"].CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do 
-if v.Name == "JeffTheKiller" then 
-v["Right Leg"].CanTouch = false 
-v["Right Leg"].CanCollide = false
-end 
-end 
-for _,v in pairs(game.workspace:GetChildren()) do
-if v.Name == "JeffTheKiller" then 
-v.Torso.CanTouch = false 
-v.Torso.CanCollide = false
-end 
-end 
-end)
-else
-AntiJeff:Disconnect()
-end
-end})
-Section.Anti:Toggle({
-	Name = "Anti-Seek Chase",
-	Default = false,
-	Callback = function(v)
-_G.AntiSeekCar = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AntiSeekCar then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do 
-if v.Name == "TriggerEventCollision" then 
-v:Destroy()
-end 
-end 
-end
-end)
-end})
-end
 
 
-Section.Bypass:Toggle({
-	Name = "Anti Cheat Manipulate",
-	Default = false,
-	Callback = function(v)
-_G.ManipulateBypass = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.ManipulateBypass then
-game.Players.LocalPlayer.Character:PivotTo(game.Players.LocalPlayer.Character:GetPivot() + workspace.CurrentCamera.CFrame.LookVector * Vector3.new(1, 0, 1) * -100)
-end
-end)
-end})
-if Mines then
-Section.Bypass:Toggle({
-	Name = "Anti Cheat Bypass",
-	Default = false,
-	Callback = function(v)
-_G.LadderBypass = v
-task.spawn(function()
-while _G.LadderBypass do wait(1)
-if _G.LadderBypass and not workspace:FindFirstChild("Ladder_Bypass") then
-local progressPart = Instance.new("Part", workspace) do
-progressPart.Anchored = true
-progressPart.CanCollide = false
-progressPart.Name = "Ladder_Bypass"
-progressPart.Transparency = 1
-end
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Find ladder and climb it!",
-Lifetime = 10
-})
-if _G.LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
-task.wait()
-game.Players.LocalPlayer.Character:SetAttribute("Climbing", false)
-Window:Notify({
-Title = Window.Settings.Title,
-Description = "Anticheat bypass complete!",
-Lifetime = 3
-})
-end
-else
-if workspace:FindFirstChild("Ladder_Bypass") then 
-workspace:FindFirstChild("Ladder_Bypass"):Destroy() 
-end
-end
-end
-end)
-end})
-end
 
 
-Section.Trolling:Toggle({
-	Name = "Lag Moving",
-	Default = false,
-	Callback = function(v)
-_G.LagBody = v
-while _G.LagBody and task.wait(0.5) do
-game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-wait(0.5)
-game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-end
-end})
-Section.Trolling:Toggle({
-	Name = "Spaming MotorReplication",
-	Default = false,
-	Callback = function(v)
-if v then
-SpoofMotor = game:GetService("RunService").Heartbeat:Connect(function()
-RemotesFolder.MotorReplication:FireServer(math.random(1,100000),math.random(1,100000),math.random(1,100000),false)
-end)
-else
-SpoofMotor:Disconnect()
-end
-end})
+
+
+
+
