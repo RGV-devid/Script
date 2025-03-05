@@ -377,6 +377,7 @@ Window:Dialog({
     }
   })
 end})
+Tabs.Players:AddSection({"Players"})
 Tabs.Players:AddSlider({
   Name = "SELECT SPEED",
   Description = "CHỌN TỐC ĐỘ",
@@ -470,31 +471,38 @@ end
 end
 end)
 end})
+Tabs.Players:AddToggle({
+Name = "NOCLIP",
+Description = "ĐI XUYÊN TƯỜNG",
+Callback = function(v)
+if v then
+        noclipConnection = game:GetService("RunService").Stepped:Connect(function()
+            local player = game.Players.LocalPlayer
+            if player and player.Character then
+                for _, part in pairs(player.Character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
+            end
+        end)
+    else
+        if noclipConnection then
+            noclipConnection:Disconnect()
+            noclipConnection = nil
+        end
+    end
+end})
+Tabs.Players:AddToggle({
+Name = "NO FOOTSTEP",
+Description = "KHÔNG CÓ BƯỚC CHÂN",
+Callback = function(v)
+_G.No_Footsteps = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if _G.Godmode and not The.Fools or The.Hotelold  then
-game.Players.LocalPlayer.Character.Collision.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0, 2.5, 0)
-game.Players.LocalPlayer.Character.Collision.CanCollide = false
-game.Players.LocalPlayer.Character.Collision.CollisionCrouch.CanCollide = false
-else
-game.Players.LocalPlayer.Character.Collision.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0, 0, 0)
-game.Players.LocalPlayer.Character.Collision.CanCollide = true
-game.Players.LocalPlayer.Character.Collision.CollisionCrouch.CanCollide = true
-end
-if _G.Godmode and The.Fools or The.Hotelold  then
-game.Players.LocalPlayer.Character.Collision.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0, 6, 0)
-game.Players.LocalPlayer.Character.Collision.CanCollide = false
-game.Players.LocalPlayer.Character.Collision.CollisionCrouch.CanCollide = false
-else
-game.Players.LocalPlayer.Character.Collision.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0, 0, 0)
-game.Players.LocalPlayer.Character.Collision.CanCollide = true
-game.Players.LocalPlayer.Character.Collision.CollisionCrouch.CanCollide = true
+if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game:FindFirstChild('Footsteps') then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Footsteps.Enabled = not _G.No_Footsteps
 end
 end)
-Tabs.Players:AddToggle({
-Name = "GODMODE",
-Description = "BẤT TỬ",
-Callback = function(v)
-_G.Godmode = v
 end})
 Tabs.Players:AddToggle({
 Name = "NO WET",
