@@ -35,10 +35,10 @@ Corner = { CornerRadius = UDim.new(0, 9e9) },
 })
 
 local Tabs = {
-Main = Window:MakeTab({"Main", "Home"}),
-Players = Window:MakeTab({"Players", "Home"}),
-Exploit = Window:MakeTab({"Exploit", "Home"}),
-Visual = Window:MakeTab({"Visual", "Home"})
+Main = Window:MakeTab({"Main", "home"}),
+Players = Window:MakeTab({"Players", "user"}),
+Exploit = Window:MakeTab({"Exploit", "bookopen"}),
+Visual = Window:MakeTab({"Visual", "eye"})
 }
 
 Tabs.Main:AddSection({"FAST - NHANH CHÓNG"})
