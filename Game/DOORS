@@ -252,6 +252,7 @@ end
 end
 end
 end})
+end
 Tabs.Main:AddToggle({
 Name = "NO LIVE SANITY ",
 Description = "KHÔNG HIỆU ỨNG TỈNH TÁO BẤT NGỜ",
