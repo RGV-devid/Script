@@ -377,7 +377,7 @@ Window:Dialog({
     }
   })
 end})
-Tabs.Players:AddSection({"Players"})
+Tabs.Players:AddSection({"PLAYERS - NGƯỜI CHƠI"})
 Tabs.Players:AddSlider({
   Name = "SELECT SPEED",
   Description = "CHỌN TỐC ĐỘ",
@@ -528,3 +528,27 @@ game.Players.LocalPlayer.Character.RightUpperLeg.Massless = not _G.NoSlow;
 game.Players.LocalPlayer.Character.UpperTorso.Massless = not _G.NoSlow;
 end)
 end})
+Tabs.Players:AddSection({"PLAYER'S PERSPECTIVE - GÓC NHÌN NGƯỜI CHƠI"})
+Tabs.Players:AddToggle({
+Name = "ALWAYS JUMP",
+Description = "LUÔN LUÔN NHẢY",
+Callback = function(v)
+_G.Always_Jump = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character:SetAttribute("CanJump", _G.Always_Jump)
+end)
+end})
+Tabs.Players:AddToggle({
+Name = "CROUCH SPOOF | NO SOUND MOVE",
+Description = "QUỲ GIẢ TẠO | KHÔNG TIẾNG DI CHUYỂN",
+Callback = function(v)
+_G.Crouch_Spoof = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.Crouch_Spoof then
+RemotesFolder.Crouch:FireServer(true)
+end
+end)
+end})
+
+
+
