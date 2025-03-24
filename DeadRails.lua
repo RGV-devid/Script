@@ -48,3 +48,65 @@ local Players = {
   ThirdPerson = false
 }
   
+game:GetService("RunService").RenderStepped:Connect(function()
+    if Interact.AutoInteractMoneyBag then
+      if workspace.RuntimeItems:FindFirstChild("Moneybag") then
+        fireproximityprompt(workspace.RuntimeItems.Moneybag.MoneyBag.CollectPrompt)
+      end
+    end
+    if Interact.AutoInteractSnakeOil then
+      if workspace.RuntimeItems:FindFirstChild("Snake Oil") then
+        local args = {
+              [1] = workspace.RuntimeItems:FindFirstChild("Snake Oil")
+            }
+            game:GetService("ReplicatedStorage").Remotes.Tool.PickUpTool:FireServer(unpack(args))
+      end
+    end
+  end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
