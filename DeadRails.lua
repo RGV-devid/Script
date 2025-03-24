@@ -1,3 +1,50 @@
+local Interact = {
+  AutoInteractMoneyBag = true,
+  AutoInteractSnakeOil = true,
+  AutoInteractBandage = true,
+  AutoInteractRevolverAmmo = true,
+  AutoInteractShotgunAmmo = true,
+  AutoInteractRifleAmmo = true,
+  AutoInteractRevolver = true,
+  AutoInteractNavyRevolver = true,
+  AutoInteractMauserC96 = true,
+  AutoInteractShotgun = true,
+  AutoInteractRifle = true,
+  AutoInteractBoltActionRifle = true,
+  AutoInteractElectrocutioner = true
+}
+local Prompt = {
+  InstanceInteract = true,
+  ThrougherInteract = true,
+  HigherInteract = true
+}
+local Doctor = {
+  HealthUseBandage = 50,
+  AutoUseBandage = true,
+  HealthUseSnakeOil = 50,
+  AutoUseSnakeOil = true
+}
+local Gun = {
+  ReloadTime = 0,
+  AutoReload = false,
+  FastShootTime = 0,
+  FastShoot = false
+}
+local Enemies = {
+  SizeHitbox = Vector3.new(0,0,0),
+  EnabledHitbox = false,
+  SizeHeadHitbox = Vector3.new(0,0,0),
+  EnabledHeadHitbox = false
+}
+local Players = {
+  SetFOV = 0,
+  FOV = false,
+  Infjump = false,
+  Noclip = false,
+  MinZoom = 0,
+  MaxZoom = 0,
+  ThirdPerson = false
+}
 game:GetService("RunService").RenderStepped:Connect(function()
     if Interact.AutoInteractMoneyBag then
       if workspace.RuntimeItems:FindFirstChild("Moneybag") then
@@ -102,21 +149,21 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end
     if Prompt.InstanceInteract then
       for i,v in ipairs(workspace:GetDescendants()) do
-        if v:FindFirstChildWhichIsA("ProximityPrompt") then
+        if v:IsA("ProximityPrompt") then
           v.HoldDuration = 0
         end
       end
     end
     if Prompt.ThrougherInteract then
       for i,v in ipairs(workspace:GetDescendants()) do
-        if v:FindFirstChildWhichIsA("ProximityPrompt") then
+        if v:IsA("ProximityPrompt") then
           v.RequiresLineOfSight = false
         end
       end
     end
     if Prompt.HigherInteract then
       for i,v in ipairs(workspace:GetDescendants()) do
-        if v:FindFirstChildWhichIsA("ProximityPrompt") then
+        if v:IsA("ProximityPrompt") then
           v.MaxActivationDistance = v.MaxActivationDistance + 5
         end
       end
