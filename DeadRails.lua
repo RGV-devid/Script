@@ -1,5 +1,3 @@
-local Entity = {"Walker","Runner","Banner","Wolf","Werewolf","Vampire","Outlaw","Unicorn","Horse"}
-
 local Interact = {
   AutoInteractMoneyBag = false,
   AutoInteractSnakeOil = false,
@@ -148,6 +146,44 @@ game:GetService("RunService").RenderStepped:Connect(function()
               [1] = workspace.RuntimeItems:FindFirstChild("Electrocutioner")
             }
             game:GetService("ReplicatedStorage").Remotes.Tool.PickUpTool:FireServer(unpack(args))
+      end
+    end
+    if Prompt.InstanceInteract then
+      for i,v in ipairs(workspace:GetDescendants()) do
+        if v:FindFirstChildWhichIsA("ProximityPrompt") then
+          v.HoldDuration = 0
+        end
+      end
+    end
+    if Prompt.ThrougherInteract then
+      for i,v in ipairs(workspace:GetDescendants()) do
+        if v:FindFirstChildWhichIsA("ProximityPrompt") then
+          v.RequiresLineOfSight = false
+        end
+      end
+    end
+    if Prompt.HigherInteract then
+      for i,v in ipairs(workspace:GetDescendants()) do
+        if v:FindFirstChildWhichIsA("ProximityPrompt") then
+          v.MaxActivationDistance = v.MaxActivationDistance + 5
+        end
+      end
+    end
+    if Doctor.AutoUseBandage then
+      if game.Players.LocalPlayer.Character:FindFirstChild("Bandage") then
+        if game.Players.LocalPlayer.Character.Humanoid.Health < Doctor.HealthUseBandage then
+           game:GetService("Players").LocalPlayer.Character:FindFirstChild("Bandage").Use:FireServer()
+        end
+      end
+    end
+    if Doctor.AutoUseSnakeOil then
+      if game.Players.LocalPlayer.Character:FindFirstChild("Snake Oil") then
+        if game.Players.LocalPlayer.Character.Humanoid.Health < Doctor.HealthUseSnakeOil then
+           local args = {
+                 [1] = game:GetService("Players").LocalPlayer.Character:FindFirstChild("Snake Oil")
+               }
+               game:GetService("Players").LocalPlayer.Character:FindFirstChild("Snake Oil").Use:FireServer(unpack(args))
+        end
       end
     end
   end)
