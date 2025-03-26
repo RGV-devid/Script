@@ -209,6 +209,7 @@ function MacLib:Window(Settings)
 	exit.BackgroundColor3 = Color3.fromRGB(250, 93, 86)
 	exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	exit.BorderSizePixel = 0
+	exit.Visble = false
 
 	local uICorner = Instance.new("UICorner")
 	uICorner.Name = "UICorner"
@@ -221,14 +222,15 @@ function MacLib:Window(Settings)
 	minimize.Name = "Minimize"
 	minimize.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
 	minimize.Text = ""
-	minimize.TextColor3 = Color3.fromRGB(0, 0, 0)
+	minimize.TextColor3 = Color3.fromRGB(0,0,0)
 	minimize.TextSize = 14
 	minimize.AutoButtonColor = false
 	minimize.BackgroundColor3 = Color3.fromRGB(252, 190, 57)
 	minimize.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	minimize.BorderSizePixel = 0
 	minimize.LayoutOrder = 1
-
+        minimize.Visble = false
+	
 	local uICorner1 = Instance.new("UICorner")
 	uICorner1.Name = "UICorner"
 	uICorner1.CornerRadius = UDim.new(1, 0)
@@ -237,11 +239,12 @@ function MacLib:Window(Settings)
 	minimize.Parent = controls
 
 	local maximize = Instance.new("TextButton")
-	maximize.Name = "Maximize"
+	maximize.Name = "TextGame"
 	maximize.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
-	maximize.Text = ""
-	maximize.TextColor3 = Color3.fromRGB(0, 0, 0)
+	maximize.Text = Settings.TextGame or ""
+	maximize.TextColor3 = Color3.fromRGB(255,255,255)
 	maximize.TextSize = 14
+	maximize.AutomaticSize = "XY"
 	maximize.AutoButtonColor = false
 	maximize.BackgroundColor3 = Color3.fromRGB(119, 174, 94)
 	maximize.BorderColor3 = Color3.fromRGB(0, 0, 0)
