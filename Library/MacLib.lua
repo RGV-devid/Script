@@ -209,7 +209,7 @@ function MacLib:Window(Settings)
 	exit.BackgroundColor3 = Color3.fromRGB(250, 93, 86)
 	exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	exit.BorderSizePixel = 0
-	exit.Visble = false
+	exit.Visible = false
 
 	local uICorner = Instance.new("UICorner")
 	uICorner.Name = "UICorner"
@@ -241,7 +241,7 @@ function MacLib:Window(Settings)
 	local maximize = Instance.new("TextButton")
 	maximize.Name = "TextGame"
 	maximize.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
-	maximize.Text = Settings.TextGame
+	maximize.Text = Settings.MainText
 	maximize.TextColor3 = Color3.fromRGB(255,255,255)
 	maximize.TextSize = 14
 	maximize.AutomaticSize = Enum.AutomaticSize.XY
