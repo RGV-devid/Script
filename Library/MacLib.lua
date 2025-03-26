@@ -229,7 +229,7 @@ function MacLib:Window(Settings)
 	minimize.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	minimize.BorderSizePixel = 0
 	minimize.LayoutOrder = 1
-        minimize.Visble = false
+        minimize.Visible = false
 	
 	local uICorner1 = Instance.new("UICorner")
 	uICorner1.Name = "UICorner"
