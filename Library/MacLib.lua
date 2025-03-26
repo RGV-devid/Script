@@ -241,10 +241,10 @@ function MacLib:Window(Settings)
 	local maximize = Instance.new("TextButton")
 	maximize.Name = "TextGame"
 	maximize.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
-	maximize.Text = Settings.TextGame or ""
+	maximize.Text = Settings.TextGame
 	maximize.TextColor3 = Color3.fromRGB(255,255,255)
 	maximize.TextSize = 14
-	maximize.AutomaticSize = "XY"
+	maximize.AutomaticSize = Enum.AutomaticSize.XY
 	maximize.AutoButtonColor = false
 	maximize.BackgroundColor3 = Color3.fromRGB(119, 174, 94)
 	maximize.BorderColor3 = Color3.fromRGB(0, 0, 0)
