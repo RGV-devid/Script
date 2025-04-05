@@ -1,6 +1,4 @@
-if game.Players:FindFirstChild("rechedmcvnGV") then
-game.Players.LocalPlayer:Kick("Mày bị kick bởi script lồn của tao")
-end
+
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/RGV-devid/Scripts/refs/heads/main/ESP"))()
 
@@ -74,7 +72,7 @@ local Tools = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Tool")
 if Tools and Tools:FindFirstChild("Configuration") then
 for _, v in ipairs(Tools.Configuration:GetChildren()) do
 if v.Name == "FireRate" and _G.FastShot then
-v.Value = v.Value * 0.2
+v.Value = 0.1
 end
 if v.Name == "reloadTime" and _G.FastReload then
 v.Value = 0
