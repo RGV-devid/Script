@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/RGV-devid/Scripts/refs/heads/main/ESP"))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "YOUHUB | Gun Ground FFA - v0.0.2",
+   Name = "YOUHUB | Gun Ground FFA - v0.0.1",
    Icon = 95073582077930,
    LoadingTitle = "YOUHUB | Gun Ground FFA",
    LoadingSubtitle = "by rechedmcvn",
@@ -72,7 +72,7 @@ local Tools = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Tool")
 if Tools and Tools:FindFirstChild("Configuration") then
 for _, v in ipairs(Tools.Configuration:GetChildren()) do
 if v.Name == "FireRate" and _G.FastShot then
-v.Value = 0.1
+v.Value = 0
 end
 if v.Name == "reloadTime" and _G.FastReload then
 v.Value = 0
@@ -153,13 +153,52 @@ end
 end
 end
 end})
-
-
-
-
-
-
-
+MainTab:CreateSection("Players")
+MainTab:CreateToggle({
+   Name = "Walkspeed",
+   Callback = function(v)
+_G.Walkspeed = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.Walkspeed then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+end
+end)
+end})
+MainTab:CreateToggle({
+   Name = "Players ESP",
+   Callback = function(v)
+if v then
+for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
+if Player ~= game:GetService("Players").LocalPlayer then
+ESP:AddESP(Player.Character, Player.DisplayName .. "\n[HP:" .. Player.Character.Humanoid.Health .. "%]", _G.PlayerCE or Color3.new(1,1,1), 14, "PlayerESP")
+end
+end
+PlayerESP = game.Players.DescendantAdded:Connect(function(Player)
+if Player ~= game:GetService("Players").LocalPlayer then
+ESP:AddESP(Player.Character, Player.DisplayName .. "\n[HP:" .. Player.Character.Humanoid.Health .. "%]", _G.PlayerCE or Color3.new(1,1,1), 14, "PlayerESP")
+end
+end)
+else
+PlayerESP:Disconnect()
+LibraryESP:Delete("PlayerESP")
+end
+end})
+MainTab:CreateSection("ESP Settings")
+MainTab:CreateToggle({
+   Name = "Text ESP",
+   Callback = function(v)
+getgenv().TextESP = v
+end})
+MainTab:CreateToggle({
+   Name = "Distance ESP",
+   Callback = function(v)
+getgenv().DistanceESP = v
+end})
+MainTab:CreateToggle({
+   Name = "Rainbow ESP",
+   Callback = function(v)
+getgenv().RainbowESP = v
+end})
 
 
 
