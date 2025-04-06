@@ -170,12 +170,12 @@ MainTab:CreateToggle({
 if v then
 for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
 if Player ~= game:GetService("Players").LocalPlayer then
-ESP:AddESP(Player.Character, Player.DisplayName .. "\n[HP:" .. Player.Character.Humanoid.Health .. "%]", _G.PlayerCE or Color3.new(1,1,1), 14, "PlayerESP")
+LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n" .. Player.Character.Humanoid.Health .. "%", Color3.new(1,1,1), 14, "PlayerESP")
 end
 end
 PlayerESP = game.Players.DescendantAdded:Connect(function(Player)
 if Player ~= game:GetService("Players").LocalPlayer then
-ESP:AddESP(Player.Character, Player.DisplayName .. "\n[HP:" .. Player.Character.Humanoid.Health .. "%]", _G.PlayerCE or Color3.new(1,1,1), 14, "PlayerESP")
+LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n" .. Player.Character.Humanoid.Health .. "%", Color3.new(1,1,1), 14, "PlayerESP")
 end
 end)
 else
