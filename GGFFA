@@ -58,7 +58,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end
   end)
 end})
-MainTab:CreateSection("Gun")
+Tabs.Main:AddSection("Gun")
 game:GetService("RunService").RenderStepped:Connect(function()
 if game.Players.LocalPlayer.Character then
 local Tools = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Tool")          
