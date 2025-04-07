@@ -160,7 +160,7 @@ MainTab:CreateToggle({
 _G.Walkspeed = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Walkspeed then
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 70
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
 end
 end)
 end})
