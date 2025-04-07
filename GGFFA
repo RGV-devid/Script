@@ -160,49 +160,20 @@ MainTab:CreateToggle({
 _G.Walkspeed = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Walkspeed then
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 70
 end
 end)
 end})
 MainTab:CreateToggle({
-   Name = "Players ESP",
+   Name = "Infjump",
    Callback = function(v)
-if v then
-for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
-if Player ~= game:GetService("Players").LocalPlayer then
-LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n" .. Player.Character.Humanoid.Health .. "%", Color3.new(1,1,1), 14, "PlayerESP")
-end
-end
-PlayerESP = workspace.DescendantAdded:Connect(function(Player)
-if Player ~= game:GetService("Players").LocalPlayer then
-LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n" .. Player.Character.Humanoid.Health .. "%", Color3.new(1,1,1), 14, "PlayerESP")
-end
+_G.Infjump = v
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if _G.Infjump then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
 end)
-else
-PlayerESP:Disconnect()
-LibraryESP:Delete("PlayerESP")
-end
 end})
-MainTab:CreateSection("ESP Settings")
-MainTab:CreateToggle({
-   Name = "Text ESP",
-   Callback = function(v)
-getgenv().TextESP = v
-end})
-MainTab:CreateToggle({
-   Name = "Distance ESP",
-   Callback = function(v)
-getgenv().DistanceESP = v
-end})
-MainTab:CreateToggle({
-   Name = "Rainbow ESP",
-   Callback = function(v)
-getgenv().RainbowESP = v
-end})
-
-
-
-
 
 
 
