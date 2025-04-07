@@ -173,7 +173,7 @@ if Player ~= game:GetService("Players").LocalPlayer then
 LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n" .. Player.Character.Humanoid.Health .. "%", Color3.new(1,1,1), 14, "PlayerESP")
 end
 end
-PlayerESP = game.Players.DescendantAdded:Connect(function(Player)
+PlayerESP = workspace.DescendantAdded:Connect(function(Player)
 if Player ~= game:GetService("Players").LocalPlayer then
 LibraryESP:AddESP(Player.Character, Player.DisplayName .. "\n" .. Player.Character.Humanoid.Health .. "%", Color3.new(1,1,1), 14, "PlayerESP")
 end
