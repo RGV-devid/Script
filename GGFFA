@@ -1,38 +1,31 @@
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/RGV-devid/Scripts/refs/heads/main/ESP"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/Library-ui/refs/heads/main/Redzhubui"))()
+              Library.Themes.Darker["Color Hub 1"] = ColorSequence.new({
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB()),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(5,5,5)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(2,2,2))
+			})
+			Library.Themes.Darker["Color Hub 2"] = Color3.fromRGB(20,20,20)
+			Library.Themes.Darker["Color Stroke"] = Color3.fromRGB(15,15,15)
+			Library.Themes.Darker["Color Theme"] = Color3.fromRGB(0,255,100)
+			Library.Themes.Darker["Color Text"] = Color3.fromRGB(255,255,255)
+			Library.Themes.Darker["Color Dark Text"] = Color3.fromRGB(0,255)
 
-local Window = Rayfield:CreateWindow({
-   Name = "YOUHUB | Gun Ground FFA - v0.0.1",
-   Icon = 95073582077930,
-   LoadingTitle = "YOUHUB | Gun Ground FFA",
-   LoadingSubtitle = "by rechedmcvn",
-   Theme = "Ocean",
+local LibraryESP = loadstring(game:HttpGet("https://github.com/RGV-devid/Scripts/blob/main/ESP?raw=true"))()
 
-   DisableRayfieldPrompts = false,
-   DisableBuildWarnings = false,
+local Window = Library:MakeWindow({"YOUHUB | Gun Ground FFA", "v0.0.1", "testando | redz lib v5.lua"})
 
-   ConfigurationSaving = {
-      Enabled = true,
-      FolderName = nil,
-      FileName = "You hub?"
-   },
-
-   KeySystem = true,
-   KeySettings = {
-      Title = "Key System",
-      Subtitle = "Key System",
-      Note = "GET KEY",
-      FileName = "Key",
-      SaveKey = true,
-      GrabKeyFromSite = false,
-      Key = {"GUNGROUNDFFA"}
-   }
+local Button = Window:AddMinimizeButton({
+Button = { ImageColor3 = Color3.fromRGB(0,255,100), Image = "rbxassetid://95869322194132", BackgroundColor3 = Color3.fromRGB(), BackgroundTransparency = 0 },
+Corner = { CornerRadius = UDim.new(0, 5) },
 })
-
-local MainTab = Window:CreateTab("Main", 4483362458)
-MainTab:CreateSection("World")
-MainTab:CreateToggle({
+Instance.new("UIStroke", game:GetService("CoreGui")["redz Library V5"].Hub).Color = Color3.fromRGB(0,255,100)
+Instance.new("UIStroke", game:GetService("CoreGui")["redz Library V5"].ImageButton).Color = Color3.fromRGB(0,255,100)
+local Tabs = {
+Main = Window:MakeTab({"Main"})
+}
+Tabs.Main:AddSection({"World"})
+Tabs.Main:AddToggle({
    Name = "Player Hitbox",
    Callback = function(v)
 _G.Hitbox = v
@@ -91,33 +84,33 @@ end
 end
 wait()
 end)
-MainTab:CreateToggle({
+Tabs.Main:AddToggle({
    Name = "Fast Reload",
    Callback = function(v)
 _G.FastReload = v
 end})
-MainTab:CreateToggle({
+Tabs.Main:AddToggle({
    Name = "Max Damage Drop Off",
    Callback = function(v)
 _G.MDDO = v
 end})
-MainTab:CreateToggle({
+Tabs.Main:AddToggle({
    Name = "Fast Shot",
    Callback = function(v)
 _G.FastShot = v
 end})
-MainTab:CreateToggle({
+Tabs.Main:AddToggle({
    Name = "Auto Force",
    Callback = function(v)
 _G.AutoForce = v
 end})
-MainTab:CreateToggle({
+Tabs.Main:AddToggle({
    Name = "Rapid Shotguns",
    Callback = function(v)
 _G.RapidShotguns = not v
 end})
-MainTab:CreateSection("GUI")
-MainTab:CreateToggle({
+Tabs.Main:AddSection({"GUI"})
+Tabs.Main:AddToggle({
    Name = "Roll Gun GUI",
    Callback = function(v)
 if v then
@@ -153,8 +146,8 @@ end
 end
 end
 end})
-MainTab:CreateSection("Players")
-MainTab:CreateToggle({
+Tabs.Main:AddSection({"Players"})
+Tabs.Main:AddToggle({
    Name = "Walkspeed",
    Callback = function(v)
 _G.Walkspeed = v
@@ -164,7 +157,7 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
 end
 end)
 end})
-MainTab:CreateToggle({
+Tabs.Main:AddToggle({
    Name = "Infjump",
    Callback = function(v)
 _G.Infjump = v
@@ -174,7 +167,41 @@ game:GetService("UserInputService").JumpRequest:connect(function()
 	end
 end)
 end})
-
-
-
+Tabs.Main:AddToggle({
+   Name = "Players ESP",
+   Callback = function(v)
+_G.PlayersESP = v
+_G.PlayersESPAttribute = v
+while _G.PlayersESP do
+local players = game.Players:GetPlayers()
+if _G.PlayersESPAttribute then
+for i,v in ipairs(players) do
+LibraryESP:AddESP(v.Character, v.DisplayName .. "\n" .. v.Character.Humanoid.Health .. "/100%", Color3.new(1,1,1), 14, "PlayersESP")
+end
+else
+for i,v in ipairs(players) do
+if v.Name == "PlayersESP" then
+v:Destroy()
+end
+end
+end
+wait()
+end
+end})
+Tabs.Main:AddSection({"ESP Settings"})
+Tabs.Main:AddToggle({
+   Name = "Distance ESP",
+   Callback = function(v)
+getgenv().DistanceESP = v
+end})
+Tabs.Main:AddToggle({
+   Name = "Text ESP",
+   Callback = function(v)
+getgenv().TextESP = v
+end})
+Tabs.Main:AddToggle({
+   Name = "Rainbow ESP",
+   Callback = function(v)
+getgenv().RainbowESP = v
+end})
 
