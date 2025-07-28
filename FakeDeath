@@ -1,0 +1,38 @@
+game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
+task.delay(0.5, function()
+workspace.Gravity = 0
+game.Players.LocalPlayer.Character.Humanoid.Health = game.Players.LocalPlayer.Character.Humanoid.MaxHealth
+game.Players.LocalPlayer.Character.Humanoid.AutomaticScalingEnabled = true
+if game.Players.LocalPlayer.Character:GetAttribute("Stunned") then
+game.Players.LocalPlayer.Character:SetAttribute("Stunned", false)
+end
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.DeathPanel:Destroy()
+end)
+end)
+getgenv().FakeDeath = true
+while getgenv().FakeDeath do
+if workspace.CurrentRooms["0"].Door:GetAttribute("Opened") then
+if replicatesignal then
+replicatesignal(game.Players.LocalPlayer.Kill)
+elseif game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid") then
+game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+else
+game.Players.LocalPlayer.Character:BreakJoints()
+end
+wait(1)
+if game.Players.LocalPlayer.Character.Humanoid.Health < 0 then
+game.Players.LocalPlayer.Character.Humanoid.Health = 100
+end
+if game.Players.LocalPlayer:GetAttribute("Stunned") then
+game.Players.LocalPlayer:SetAttribute("Stunned", false)
+end
+if game.Players.LocalPlayer:GetAttribute("Alive") then
+game.Players.LocalPlayer:SetAttribute("Alive", true)
+end
+wait(2)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.CurrentRooms["0"].Assets.Rug:GetChildren()[4].CFrame - Vector3.new(0, -7.5, 0)
+wait(1)
+getgenv().FakeDeath = false
+end
+wait()
+end
