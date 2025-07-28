@@ -6,7 +6,6 @@ game.Players.LocalPlayer.Character.Humanoid.AutomaticScalingEnabled = true
 if game.Players.LocalPlayer.Character:GetAttribute("Stunned") then
 game.Players.LocalPlayer.Character:SetAttribute("Stunned", false)
 end
-game:GetService("Players").LocalPlayer.PlayerGui.MainUI.DeathPanel.Visible = false
 end)
 end)
 getgenv().FakeDeath = true
